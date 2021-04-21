@@ -45,7 +45,11 @@ public class ResultUtil {
     public static Result<Object> fail(StatusCode code, Throwable throwable) {
         StatusCode statusCode = Optional.ofNullable(code).orElse(StatusCode.SYSTEM_ERROR);
         if (throwable != null) {
-            log.error("请求错误结果:", throwable);
+            log.error(
+                    "请求错误结果:[ {} ]",
+                    StrUtil.trimToEmpty(statusCode.getCode()) + ":" + StrUtil.trimToEmpty(statusCode.getMessage()),
+                    throwable
+            );
         }
         return Result.builder()
                 .code(statusCode.getCode())
@@ -66,7 +70,11 @@ public class ResultUtil {
         String statusCode = Optional.ofNullable(code).orElse(StatusCode.SYSTEM_ERROR.getCode());
         String statusMessage = Optional.ofNullable(message).orElse(StatusCode.SYSTEM_ERROR.getMessage());
         if (throwable != null) {
-            log.error("请求错误结果:", throwable);
+            log.error(
+                    "请求错误结果:[ {} ]",
+                    StrUtil.trimToEmpty(statusCode) + ":" + StrUtil.trimToEmpty(statusMessage),
+                    throwable
+            );
         }
         return Result.builder()
                 .code(StrUtil.trimToEmpty(statusCode))

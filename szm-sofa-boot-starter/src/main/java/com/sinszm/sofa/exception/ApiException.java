@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
  * @author sinszm
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 public class ApiException extends RuntimeException {
 
     private String code;

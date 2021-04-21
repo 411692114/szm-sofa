@@ -5,9 +5,12 @@ import cn.hutool.json.JSONUtil;
 import com.sinszm.sofa.SpringHelper;
 import com.sinszm.sofa.Swagger3Properties;
 import com.sinszm.sofa.exception.ApiException;
+import com.sinszm.sofa.response.Result;
+import com.sinszm.sofa.response.ResultUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,9 +34,12 @@ public class DemoController {
     }
 
     @ApiOperation(value = "测试Exception")
-    @GetMapping("/hello2")
-    public String hello2() {
-        throw new ApiException("100","1231231");
+    @GetMapping(value = "/hello2", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Result<String> hello2() {
+        if (System.currentTimeMillis() > 0) {
+            throw new ApiException("100","1231231");
+        }
+        return ResultUtil.ok();
     }
 
 
