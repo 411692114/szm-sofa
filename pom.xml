@@ -10,11 +10,7 @@
 
     <name>szm-sofa</name>
     <description>
-        基于SpringBoot、SOFABoot扩展生态微服务应用
-
-        Copyright © 2021 智慧程序猿 All rights reserved.
-
-        https://www.sinsz.com
+        高可用服务框架 Copyright © 2021 智慧程序猿（sinsz.com） All rights reserved.
     </description>
 
     <developers>
@@ -95,7 +91,18 @@
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
+
+    <modules>
+        <module>szm-sofa-boot-starter</module>
+    </modules>
 
     <!--配置编译插件-->
     <profiles>
