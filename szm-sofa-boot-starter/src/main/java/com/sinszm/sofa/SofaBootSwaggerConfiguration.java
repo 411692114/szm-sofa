@@ -1,8 +1,10 @@
 package com.sinszm.sofa;
 
+import cn.hutool.core.util.StrUtil;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -15,6 +17,8 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 
 import javax.annotation.Resource;
+
+import static springfox.documentation.spring.web.plugins.Docket.DEFAULT_GROUP_NAME;
 
 /**
  * 接口文档配置
@@ -29,10 +33,18 @@ public class SofaBootSwaggerConfiguration {
     @Resource
     private Swagger3Properties swagger3Properties;
 
+    @Resource
+    private ApplicationContext applicationContext;
+
     @Bean
     public Docket createRestApi() {
+        String groupName = applicationContext.getEnvironment()
+                .getProperty("spring.application.name");
         return new Docket(DocumentationType.OAS_30)
                 .enable(swagger3Properties.isEnable())
+                .groupName(
+                        StrUtil.isEmpty(groupName) ? DEFAULT_GROUP_NAME : StrUtil.trimToEmpty(groupName)
+                )
                 .apiInfo(apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
