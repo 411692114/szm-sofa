@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.sinszm.sofa.SpringHelper;
 import com.sinszm.sofa.Swagger3Properties;
+import com.sinszm.sofa.exception.ApiException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -27,6 +28,12 @@ public class DemoController {
         System.out.println(SpringHelper.instance().environment().getProperty("spring.application.name"));
         System.out.println("---");
         return StrUtil.trimToEmpty(name);
+    }
+
+    @ApiOperation(value = "测试Exception")
+    @GetMapping("/hello2")
+    public String hello2() {
+        throw new ApiException("100","1231231");
     }
 
 
