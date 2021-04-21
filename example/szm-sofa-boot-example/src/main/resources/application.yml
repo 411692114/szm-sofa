@@ -1,0 +1,12 @@
+server:
+  port: 9922
+
+spring:
+  application:
+    name: example
+
+logging:
+  path: ./logs
+
+swagger:
+  enable: true

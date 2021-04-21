@@ -73,7 +73,7 @@ public class SpringHelper {
      * 获取Spring环境信息
      * @return  环境信息
      */
-    public Environment activeProfile() {
+    public Environment environment() {
         return context().getEnvironment();
     }
 
