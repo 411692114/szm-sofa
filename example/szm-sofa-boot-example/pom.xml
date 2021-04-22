@@ -29,6 +29,16 @@
         </dependency>
 
         <dependency>
+            <groupId>com.sinszm.sofa</groupId>
+            <artifactId>szm-sofa-boot-starter-orm</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>

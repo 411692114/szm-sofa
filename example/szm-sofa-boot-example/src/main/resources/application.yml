@@ -4,9 +4,17 @@ server:
 spring:
   application:
     name: example
+  datasource:
+    platform: mysql
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.8.196:3306/gfhlw?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2b8&useSSL=false&allowMultiQueries=true
+    username: root
+    password: gftech
 
 logging:
   path: ./logs
 
 swagger:
   enable: true
+orm:
+  base-package: com.sinszm.sofa.dao
