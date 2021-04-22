@@ -63,7 +63,7 @@ public class SofaBootStarterOrmConfiguration implements TransactionManagementCon
     private PaginationInnerInterceptor paginationInnerInterceptor() {
         PaginationInnerInterceptor paginationInnerInterceptor = new PaginationInnerInterceptor();
         paginationInnerInterceptor.setOverflow(false);
-        paginationInnerInterceptor.setMaxLimit(500L);
+        paginationInnerInterceptor.setMaxLimit(1000L);
         paginationInnerInterceptor.setDbType(DbType.getDbType("all".equals(dbType) ? "other" : dbType));
         return paginationInnerInterceptor;
     }
