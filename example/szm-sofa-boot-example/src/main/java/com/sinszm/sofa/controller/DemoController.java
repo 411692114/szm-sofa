@@ -4,7 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.sinszm.sofa.SpringHelper;
 import com.sinszm.sofa.Swagger3Properties;
-import com.sinszm.sofa.exception.ApiException;
+import com.sinszm.sofa.annotation.ResultBody;
 import com.sinszm.sofa.response.Result;
 import com.sinszm.sofa.response.ResultUtil;
 import io.swagger.annotations.Api;
@@ -24,7 +24,8 @@ public class DemoController {
 
     @ApiOperation(value = "Hello测试")
     @ApiImplicitParam(name = "name", value = "姓名", dataTypeClass = String.class)
-    @GetMapping("/hello")
+    @GetMapping(value = "/hello")
+    @ResultBody
     public String hello(@RequestParam(required = false) String name) {
         System.out.println("---");
         System.out.println(JSONUtil.toJsonPrettyStr(SpringHelper.instance().getBean(Swagger3Properties.class)));
@@ -35,12 +36,23 @@ public class DemoController {
 
     @ApiOperation(value = "测试Exception")
     @GetMapping(value = "/hello2", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResultBody
     public Result<String> hello2() {
-        if (System.currentTimeMillis() > 0) {
-            throw new ApiException("100","1231231");
-        }
-        return ResultUtil.ok();
+        return ResultUtil.ok("我是2号");
     }
 
+    @ApiOperation(value = "测试Exception")
+    @GetMapping(value = "/hello4", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResultBody
+    public void hello3() {
+        System.out.println("adfasfjasfalksfaskfjlasfasdf");
+    }
+
+    @ApiOperation(value = "测试Exception")
+    @GetMapping(value = "/hello5", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResultBody
+    public Integer hello5() {
+        return Integer.MAX_VALUE;
+    }
 
 }
