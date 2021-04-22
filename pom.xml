@@ -51,6 +51,7 @@
     </parent>
 
     <properties>
+        <!-- 公共库版本 -->
         <charset>UTF-8</charset>
         <project.build.sourceEncoding>${charset}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${charset}</project.reporting.outputEncoding>
@@ -60,7 +61,8 @@
         <hutool.version>5.6.3</hutool.version>
         <swagger.version>3.0.0</swagger.version>
         <spring.plugin.version>2.0.0.RELEASE</spring.plugin.version>
-
+        <mybatis.plus.version>3.4.2</mybatis.plus.version>
+        <!-- 模块版本 -->
         <szm.version>1.0.0</szm.version>
     </properties>
 
@@ -117,8 +119,20 @@
             </dependency>
 
             <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis.plus.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>com.sinszm.sofa</groupId>
                 <artifactId>szm-sofa-boot-starter</artifactId>
+                <version>${szm.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.sinszm.sofa</groupId>
+                <artifactId>szm-sofa-boot-starter-orm</artifactId>
                 <version>${szm.version}</version>
             </dependency>
         </dependencies>
@@ -131,10 +145,19 @@
             <version>RELEASE</version>
             <scope>compile</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
 
     <modules>
+        <!-- 组件 -->
         <module>szm-sofa-boot-starter</module>
+        <module>szm-sofa-boot-starter-orm</module>
+        <!-- 示例 -->
         <module>example/szm-sofa-boot-example</module>
     </modules>
 
