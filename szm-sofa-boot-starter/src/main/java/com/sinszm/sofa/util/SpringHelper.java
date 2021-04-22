@@ -1,4 +1,4 @@
-package com.sinszm.sofa;
+package com.sinszm.sofa.util;
 
 import cn.hutool.extra.spring.SpringUtil;
 import org.springframework.context.ApplicationContext;

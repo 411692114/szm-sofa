@@ -2,11 +2,12 @@ package com.sinszm.sofa.controller;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
-import com.sinszm.sofa.SpringHelper;
 import com.sinszm.sofa.Swagger3Properties;
 import com.sinszm.sofa.annotation.ResultBody;
 import com.sinszm.sofa.response.Result;
 import com.sinszm.sofa.response.ResultUtil;
+import com.sinszm.sofa.util.BaseUtil;
+import com.sinszm.sofa.util.SpringHelper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -38,7 +39,7 @@ public class DemoController {
     @GetMapping(value = "/hello2", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResultBody
     public Result<String> hello2() {
-        return ResultUtil.ok("我是2号");
+        return ResultUtil.ok(BaseUtil.md5("我是2号"));
     }
 
     @ApiOperation(value = "测试Exception")
