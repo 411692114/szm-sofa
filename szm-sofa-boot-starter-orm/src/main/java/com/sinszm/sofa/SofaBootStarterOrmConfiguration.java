@@ -1,7 +1,6 @@
 package com.sinszm.sofa;
 
 
-import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.autoconfigure.ConfigurationCustomizer;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor;
@@ -10,7 +9,6 @@ import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerIntercept
 import com.sinszm.sofa.annotation.EnableORM;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
@@ -35,9 +33,6 @@ public class SofaBootStarterOrmConfiguration implements TransactionManagementCon
     @Resource
     private DataSource dataSource;
 
-    @Value("${spring.datasource.platform:other}")
-    private String dbType;
-
     @Bean(TRANSACTION_MANAGER)
     @Primary
     public PlatformTransactionManager mdbManager() {
@@ -56,26 +51,17 @@ public class SofaBootStarterOrmConfiguration implements TransactionManagementCon
         return mdbManager;
     }
 
-    /**
-     * 分页插件属性配置
-     * @return  拦截器
-     */
-    private PaginationInnerInterceptor paginationInnerInterceptor() {
-        PaginationInnerInterceptor paginationInnerInterceptor = new PaginationInnerInterceptor();
-        paginationInnerInterceptor.setOverflow(false);
-        paginationInnerInterceptor.setMaxLimit(1000L);
-        paginationInnerInterceptor.setDbType(DbType.getDbType("all".equals(dbType) ? "other" : dbType));
-        return paginationInnerInterceptor;
-    }
-
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
-        //分页
-        interceptor.addInnerInterceptor(paginationInnerInterceptor());
-        //乐观锁
+        //分页拦截器
+        PaginationInnerInterceptor paginationInnerInterceptor = new PaginationInnerInterceptor();
+        paginationInnerInterceptor.setOverflow(false);
+        paginationInnerInterceptor.setMaxLimit(1000L);
+        interceptor.addInnerInterceptor(paginationInnerInterceptor);
+        //乐观锁拦截器
         interceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
-        //防止全表更新与删除
+        //防止全表更新与删除拦截器
         interceptor.addInnerInterceptor(new BlockAttackInnerInterceptor());
         return interceptor;
     }
