@@ -1,6 +1,19 @@
 server:
   port: 9922
 
+logging:
+  path: ./logs
+  level:
+    com:
+      sinszm:
+        sofa: debug
+
+orm:
+  base-package: com.sinszm.sofa.dao
+
+swagger:
+  enable: true
+
 spring:
   application:
     name: example
@@ -25,15 +38,6 @@ spring:
           url: jdbc:mysql://192.168.8.196:3306/gpf?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2b8&useSSL=false&allowMultiQueries=true
           username: ${spring.datasource.username}
           password: ${spring.datasource.password}
-
-logging:
-  path: ./logs
-
-swagger:
-  enable: true
-
-orm:
-  base-package: com.sinszm.sofa.dao
 
 mybatis-plus:
   configuration:

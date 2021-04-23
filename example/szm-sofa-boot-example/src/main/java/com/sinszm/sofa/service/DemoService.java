@@ -6,6 +6,7 @@ import com.sinszm.sofa.dao.DemoTestMapper;
 import com.sinszm.sofa.entity.Demo;
 import com.sinszm.sofa.entity.DemoTest;
 import com.sinszm.sofa.util.BaseUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -13,6 +14,7 @@ import javax.annotation.Resource;
 /**
  * @author fh411
  */
+@Slf4j
 @Service
 public class DemoService {
 
@@ -31,6 +33,7 @@ public class DemoService {
         demoMapper.insert(demo);
         demo.setId(BaseUtil.uuid());
         demoMapper.insert(demo);
+        log.info("我是add1");
     }
 
     @DSTransactional
@@ -42,6 +45,7 @@ public class DemoService {
         demoTestMapper.insert(demo);
         demo.setId(System.currentTimeMillis()+1);
         demoTestMapper.insert(demo);
+        log.debug("我是add2");
     }
 
 
