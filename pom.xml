@@ -59,6 +59,7 @@
         <sofa.version>3.6.0</sofa.version>
         <platform.version>Cairo-SR8</platform.version>
         <hutool.version>5.6.3</hutool.version>
+        <lombok.version>1.18.20</lombok.version>
         <swagger.version>3.0.0</swagger.version>
         <spring.plugin.version>2.0.0.RELEASE</spring.plugin.version>
         <mybatis.plus.version>3.4.2</mybatis.plus.version>
@@ -89,6 +90,12 @@
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
             </dependency>
 
             <dependency>
@@ -149,7 +156,6 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>RELEASE</version>
             <scope>compile</scope>
         </dependency>
 
