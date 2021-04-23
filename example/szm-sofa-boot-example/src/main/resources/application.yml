@@ -10,6 +10,21 @@ spring:
     url: jdbc:mysql://192.168.8.196:3306/gfhlw?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2b8&useSSL=false&allowMultiQueries=true
     username: root
     password: gftech
+    dynamic:
+      primary: mysql
+      health: true
+      strict: false
+      datasource:
+        mysql:
+          driver-class-name: ${spring.datasource.driver-class-name}
+          url: ${spring.datasource.url}
+          username: ${spring.datasource.username}
+          password: ${spring.datasource.password}
+        mysql2:
+          driver-class-name: ${spring.datasource.driver-class-name}
+          url: jdbc:mysql://192.168.8.196:3306/gpf?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2b8&useSSL=false&allowMultiQueries=true
+          username: ${spring.datasource.username}
+          password: ${spring.datasource.password}
 
 logging:
   path: ./logs
