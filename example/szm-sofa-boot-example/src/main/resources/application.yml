@@ -31,5 +31,10 @@ logging:
 
 swagger:
   enable: true
+
 orm:
   base-package: com.sinszm.sofa.dao
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
