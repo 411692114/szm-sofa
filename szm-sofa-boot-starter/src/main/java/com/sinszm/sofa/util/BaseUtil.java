@@ -91,7 +91,7 @@ public class BaseUtil {
      * @param arg0  字符串，可为null
      * @return      格式化字符串
      */
-    public String trim(String arg0) {
+    public static String trim(String arg0) {
         return StrUtil.trimToEmpty(arg0);
     }
 
@@ -100,7 +100,7 @@ public class BaseUtil {
      * @param arg0  字符串
      * @return      true表示空，false表示非空
      */
-    public boolean isEmpty(String arg0) {
+    public static boolean isEmpty(String arg0) {
         return StrUtil.isEmpty(trim(arg0));
     }
 
