@@ -1,6 +1,8 @@
 package com.sinszm.sofa.service;
 
 import com.sinszm.sofa.service.support.UploadInfo;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.ResponseEntity;
 
 import java.io.InputStream;
 
@@ -27,4 +29,14 @@ public interface DfsService {
      * @return              文件下载
      */
     InputStream download(String group, String path);
+
+    /**
+     * 下载文件流
+     * @param fileName      文件名称（需要带后缀扩展名）
+     * @param group         文件组或bucket
+     * @param path          存储路径
+     * @return              文件流下载
+     */
+    ResponseEntity<InputStreamResource> download(String fileName, String group, String path);
+
 }
