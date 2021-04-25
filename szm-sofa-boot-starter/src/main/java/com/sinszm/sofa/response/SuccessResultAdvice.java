@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
@@ -47,6 +48,9 @@ public class SuccessResultAdvice implements ResponseBodyAdvice<Object> {
             return ResultUtil.ok("");
         }
         if (body instanceof Result) {
+            return body;
+        }
+        if (body instanceof ResponseEntity) {
             return body;
         }
         if (body instanceof String) {
