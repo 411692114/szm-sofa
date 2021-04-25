@@ -14,9 +14,28 @@ orm:
 swagger:
   enable: true
 
+dfs:
+  type: minio
+  minio:
+    endpoint: http://192.168.8.185
+    port: 9000
+    access-key: AKIA555FOD555EXAMPLE
+    secret-key: wJal555tnFEMI1K7MDENG1b345fiCYEXAM443KEY
+    bucket: hello
+fdfs:
+  tracker-list:
+    - 192.168.8.185:22122
+
 spring:
   application:
     name: example
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 1GB
+      max-request-size: 1GB
+      location: ${user.dir}/tmp
+      resolve-lazily: true
   datasource:
     platform: mysql
     driver-class-name: com.mysql.cj.jdbc.Driver

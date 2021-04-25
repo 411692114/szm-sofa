@@ -1,20 +1,31 @@
 package com.sinszm.sofa.controller;
 
+import cn.hutool.core.io.IoUtil;
+import cn.hutool.core.io.file.FileNameUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.sinszm.sofa.Swagger3Properties;
 import com.sinszm.sofa.annotation.ResultBody;
 import com.sinszm.sofa.response.Result;
 import com.sinszm.sofa.response.ResultUtil;
+import com.sinszm.sofa.service.DfsService;
+import com.sinszm.sofa.service.support.UploadInfo;
 import com.sinszm.sofa.util.BaseUtil;
 import com.sinszm.sofa.util.SpringHelper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import lombok.SneakyThrows;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.annotation.Resource;
 
 /**
  * @author sinszm
@@ -54,6 +65,33 @@ public class DemoController {
     @ResultBody
     public Integer hello5() {
         return Integer.MAX_VALUE;
+    }
+
+    @Resource
+    private DfsService dfsService;
+
+    @SneakyThrows
+    @ApiOperation(value = "upload")
+    @PostMapping(value = "/upload")
+    @ResultBody
+    public UploadInfo upload(@RequestParam("file") MultipartFile file) {
+        long fileSize = file.getSize();
+        String contentType = file.getContentType();
+        String fileName = file.getOriginalFilename();
+        String fileExt = FileNameUtil.extName(fileName);
+        byte[] fileBytes = IoUtil.readBytes(file.getInputStream());
+        System.out.println("------------------");
+        System.out.println(fileName);
+        System.out.println(contentType);
+        System.out.println(fileSize);
+        System.out.println("------------------");
+        return dfsService.upload(fileBytes, fileSize, contentType, fileExt);
+    }
+
+    @ApiOperation(value = "下载文档")
+    @GetMapping(value = "/download")
+    public ResponseEntity<InputStreamResource> download() {
+        return dfsService.download("测试1.mp4", "hello", "2021/04/25/450c2fe189ef4e069eee772d01c6d52e.mp4");
     }
 
 }

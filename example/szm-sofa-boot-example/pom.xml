@@ -55,6 +55,11 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>com.sinszm.sofa</groupId>
+            <artifactId>szm-sofa-boot-starter-dfs</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
