@@ -5,7 +5,11 @@ import com.github.tobato.fastdfs.FdfsClientConfig;
 import com.sinszm.sofa.annotation.EnableDFS;
 import com.sinszm.sofa.enums.DfsType;
 import com.sinszm.sofa.util.BaseUtil;
+import io.minio.BucketExistsArgs;
+import io.minio.MakeBucketArgs;
 import io.minio.MinioClient;
+import lombok.SneakyThrows;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.*;
 import org.springframework.jmx.support.RegistrationPolicy;
@@ -30,7 +34,7 @@ public class SofaBootStarterDfsConfiguration {
 
     @EnableDFS(DfsType.MINIO)
     @Configuration
-    public static class MinIoConfiguration {
+    public static class MinIoConfiguration implements CommandLineRunner {
 
         @Resource
         private MinIoProperties minIoProperties;
@@ -48,6 +52,28 @@ public class SofaBootStarterDfsConfiguration {
                             BaseUtil.trim(minIoProperties.getSecretKey())
                     )
                     .build();
+        }
+
+        @Resource
+        private MinioClient minioClient;
+
+        /**
+         * 判断及初始化存储桶
+         * @param args  参数
+         */
+        @SneakyThrows
+        @Override
+        public void run(String... args) {
+            boolean isExist = minioClient.bucketExists(
+                    BucketExistsArgs.builder()
+                            .bucket(BaseUtil.trim(minIoProperties.getBucket()))
+                            .build()
+            );
+            if(!isExist) {
+                minioClient.makeBucket(MakeBucketArgs.builder()
+                        .bucket(BaseUtil.trim(minIoProperties.getBucket()))
+                        .build());
+            }
         }
 
     }
