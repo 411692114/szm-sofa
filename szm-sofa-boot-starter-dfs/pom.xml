@@ -6,11 +6,11 @@
     <parent>
         <groupId>com.sinszm.sofa</groupId>
         <artifactId>szm-sofa</artifactId>
-        <version>1.0.1</version>
+        <version>1.0.2</version>
     </parent>
 
     <artifactId>szm-sofa-boot-starter-dfs</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <packaging>jar</packaging>
 
     <name>szm-sofa-boot-starter-dfs</name>

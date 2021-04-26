@@ -5,7 +5,7 @@
 
     <groupId>com.sinszm.sofa</groupId>
     <artifactId>szm-sofa</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <packaging>pom</packaging>
 
     <name>szm-sofa</name>
@@ -65,7 +65,7 @@
         <mybatis.plus.version>3.4.2</mybatis.plus.version>
         <mybatis.dynamic.version>3.3.2</mybatis.dynamic.version>
         <!-- 模块版本 -->
-        <szm.version>1.0.1</szm.version>
+        <szm.version>1.0.2</szm.version>
     </properties>
 
     <dependencyManagement>
