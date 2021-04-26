@@ -43,6 +43,14 @@ public class ConditionalOnDfs extends SpringBootCondition {
 
     private static final String COS_APPID = "dfs.cos.appid";
 
+    private static final String OSS_ACCESS_ID = "dfs.oss.access-key-id";
+
+    private static final String OSS_ACCESS_SECRET = "dfs.oss.access-key-secret";
+
+    private static final String OSS_ACCESS_ENDPOINT = "dfs.oss.endpoint";
+
+    private static final String OSS_ACCESS_BUCKET = "dfs.oss.bucket";
+
     private static final AtomicInteger INIT = new AtomicInteger(0);
 
     private <T> T propValue(ConditionContext context, String key, Class<T> cls) {
@@ -74,6 +82,12 @@ public class ConditionalOnDfs extends SpringBootCondition {
                     Assert.notEmpty(BaseUtil.trim(propValue(context, COS_REGION, String.class)), () -> new ApiException("-1", COS_REGION + "不能为空"));
                     Assert.notEmpty(BaseUtil.trim(propValue(context, COS_BUCKET, String.class)), () -> new ApiException("-1", COS_BUCKET + "不能为空"));
                     Assert.notEmpty(BaseUtil.trim(propValue(context, COS_APPID, String.class)), () -> new ApiException("-1", COS_APPID + "不能为空"));
+                    break;
+                case OSS:
+                    Assert.notEmpty(BaseUtil.trim(propValue(context, OSS_ACCESS_ID, String.class)), () -> new ApiException("-1", OSS_ACCESS_ID + "不能为空"));
+                    Assert.notEmpty(BaseUtil.trim(propValue(context, OSS_ACCESS_SECRET, String.class)), () -> new ApiException("-1", OSS_ACCESS_SECRET + "不能为空"));
+                    Assert.notEmpty(BaseUtil.trim(propValue(context, OSS_ACCESS_ENDPOINT, String.class)), () -> new ApiException("-1", OSS_ACCESS_ENDPOINT + "不能为空"));
+                    Assert.notEmpty(BaseUtil.trim(propValue(context, OSS_ACCESS_BUCKET, String.class)), () -> new ApiException("-1", OSS_ACCESS_BUCKET + "不能为空"));
                     break;
                 default:
                     throw new ApiException("-1", "未实现的分布式文件服务类型");

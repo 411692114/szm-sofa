@@ -6,10 +6,7 @@ import cn.hutool.core.util.URLUtil;
 import com.sinszm.sofa.DfsProperties;
 import com.sinszm.sofa.exception.ApiException;
 import com.sinszm.sofa.service.DfsService;
-import com.sinszm.sofa.service.support.CosWrapper;
-import com.sinszm.sofa.service.support.FastDfsWrapper;
-import com.sinszm.sofa.service.support.MinIoWrapper;
-import com.sinszm.sofa.service.support.UploadInfo;
+import com.sinszm.sofa.service.support.*;
 import com.sinszm.sofa.util.SpringHelper;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -41,6 +38,10 @@ public class DfsServiceImpl implements DfsService {
         return SpringHelper.instance().getBean(CosWrapper.class);
     }
 
+    private OSSWrapper oss() {
+        return SpringHelper.instance().getBean(OSSWrapper.class);
+    }
+
     @Resource
     private DfsProperties dfsProperties;
 
@@ -57,6 +58,8 @@ public class DfsServiceImpl implements DfsService {
                 return fastDfs().upload(bytes, fileSize, extension);
             case COS:
                 return cos().upload(bytes, fileSize, contentType, extension);
+            case OSS:
+                return oss().upload(bytes, fileSize, contentType, extension);
             default:
                 throw new ApiException("-1", "暂不支持的上传类型");
         }
@@ -73,6 +76,8 @@ public class DfsServiceImpl implements DfsService {
                 return fastDfs().download(group, path);
             case COS:
                 return cos().download(group, path);
+            case OSS:
+                return oss().download(group, path);
             default:
                 throw new ApiException("-1", "暂不支持的文件下载类型");
         }

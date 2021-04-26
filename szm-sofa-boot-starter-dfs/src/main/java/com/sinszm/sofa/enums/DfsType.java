@@ -19,6 +19,11 @@ public enum DfsType {
     /**
      * 腾讯云对象存储
      */
-    COS
+    COS,
+
+    /**
+     * 阿里云对象存储
+     */
+    OSS
 
 }

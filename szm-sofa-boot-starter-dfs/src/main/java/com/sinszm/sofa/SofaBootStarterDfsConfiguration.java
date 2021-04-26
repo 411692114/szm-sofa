@@ -2,6 +2,12 @@ package com.sinszm.sofa;
 
 
 import cn.hutool.core.util.StrUtil;
+import com.aliyun.oss.ClientBuilderConfiguration;
+import com.aliyun.oss.OSS;
+import com.aliyun.oss.OSSClientBuilder;
+import com.aliyun.oss.model.CannedAccessControlList;
+import com.aliyun.oss.model.DataRedundancyType;
+import com.aliyun.oss.model.StorageClass;
 import com.github.tobato.fastdfs.FdfsClientConfig;
 import com.qcloud.cos.COSClient;
 import com.qcloud.cos.ClientConfig;
@@ -30,7 +36,7 @@ import java.util.Optional;
  * @author sinszm
  */
 @PropertySource("classpath:settings.properties")
-@EnableConfigurationProperties({DfsProperties.class,MinIoProperties.class,CosProperties.class})
+@EnableConfigurationProperties({DfsProperties.class,MinIoProperties.class,CosProperties.class,OssProperties.class})
 public class SofaBootStarterDfsConfiguration {
 
     @EnableDFS(DfsType.FAST_DFS)
@@ -102,7 +108,7 @@ public class SofaBootStarterDfsConfiguration {
          * </p>
          * @return  客户端对象
          */
-        @Bean
+        @Bean(destroyMethod = "shutdown")
         public COSClient cosClient() {
             COSCredentials cred = new BasicCOSCredentials(
                     StrUtil.trimToEmpty(cosProperties.getSecretId()),
@@ -123,7 +129,46 @@ public class SofaBootStarterDfsConfiguration {
             boolean state = cosClient.doesBucketExist(BaseUtil.trim(cosProperties.bucketName()));
             if (!state) {
                 CreateBucketRequest request = new CreateBucketRequest(BaseUtil.trim(cosProperties.bucketName()));
+                request.withCannedAcl(com.qcloud.cos.model.CannedAccessControlList.PublicReadWrite);
                 cosClient.createBucket(request);
+            }
+        }
+
+    }
+
+    @EnableDFS(DfsType.OSS)
+    @Configuration
+    public static class AliOssConfiguration implements CommandLineRunner {
+
+        @Resource
+        private OssProperties ossProperties;
+
+        @Bean(destroyMethod = "shutdown")
+        public OSS oss() {
+            ClientBuilderConfiguration conf = new ClientBuilderConfiguration();
+            conf.setSupportCname(true);
+            return new OSSClientBuilder().build(
+                    BaseUtil.trim(ossProperties.getEndpoint()),
+                    BaseUtil.trim(ossProperties.getAccessKeyId()),
+                    BaseUtil.trim(ossProperties.getAccessKeySecret()),
+                    conf
+            );
+        }
+
+        @Resource
+        private OSS oss;
+
+        @Override
+        public void run(String... args) {
+            boolean exists = oss.doesBucketExist(BaseUtil.trim(ossProperties.getBucket()));
+            if (!exists) {
+                com.aliyun.oss.model.CreateBucketRequest request = new com.aliyun.oss.model.CreateBucketRequest(
+                        BaseUtil.trim(ossProperties.getBucket())
+                );
+                request.setStorageClass(StorageClass.Standard);
+                request.setDataRedundancyType(DataRedundancyType.LRS);
+                request.setCannedACL(CannedAccessControlList.PublicReadWrite);
+                oss.createBucket(request);
             }
         }
 

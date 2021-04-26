@@ -57,6 +57,7 @@
         <fastdfs.version>1.27.2</fastdfs.version>
         <minio.version>7.1.4</minio.version>
         <cos.version>5.6.39</cos.version>
+        <oss.version>3.12.0</oss.version>
     </properties>
 
     <dependencyManagement>
@@ -77,6 +78,12 @@
                 <groupId>com.qcloud</groupId>
                 <artifactId>cos_api</artifactId>
                 <version>${cos.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.aliyun.oss</groupId>
+                <artifactId>aliyun-sdk-oss</artifactId>
+                <version>${oss.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -106,6 +113,11 @@
         <dependency>
             <groupId>com.qcloud</groupId>
             <artifactId>cos_api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
         </dependency>
 
         <dependency>
