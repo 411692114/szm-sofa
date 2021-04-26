@@ -91,7 +91,7 @@ public class DemoController {
     @ApiOperation(value = "下载文档")
     @GetMapping(value = "/download")
     public ResponseEntity<InputStreamResource> download() {
-        return dfsService.download("测试1.mp4", "demo2-1251221235", "2021/04/26/eda253c65cef48a180147a4a1265c033.mp4");
+        return dfsService.download("测试1.mp4", "sinszm", "2021/04/26/a44a5e607df64b23aa90128c2cbc5fe6.mp4");
     }
 
 }

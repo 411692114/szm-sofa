@@ -15,7 +15,7 @@ swagger:
   enable: true
 
 dfs:
-  type: cos
+  type: oss
   minio:
     endpoint: http://192.168.8.185
     port: 9000
@@ -28,6 +28,11 @@ dfs:
     region: ap-chongqing
     secret-id: AKIDjh23Gz5vfip6coyfzCAVcpW9g1d4xPRf
     secret-key: jn6fzIiBH3ChbSHglh1uvRohhjne2RR3
+  oss:
+    access-key-id: bO2LR77752mwt9pW
+    access-key-secret: mIs35pM1aerVx0Zj7t256eLjPYluii
+    bucket: sinszm
+    endpoint: https://oss-cn-hangzhou.aliyuncs.com
 fdfs:
   tracker-list:
     - 192.168.8.185:22122
