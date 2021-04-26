@@ -1,10 +1,12 @@
 package com.sinszm.sofa.service.impl;
 
 import cn.hutool.core.io.IoUtil;
+import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.URLUtil;
 import com.sinszm.sofa.DfsProperties;
 import com.sinszm.sofa.exception.ApiException;
 import com.sinszm.sofa.service.DfsService;
+import com.sinszm.sofa.service.support.CosWrapper;
 import com.sinszm.sofa.service.support.FastDfsWrapper;
 import com.sinszm.sofa.service.support.MinIoWrapper;
 import com.sinszm.sofa.service.support.UploadInfo;
@@ -35,16 +37,26 @@ public class DfsServiceImpl implements DfsService {
         return SpringHelper.instance().getBean(MinIoWrapper.class);
     }
 
+    private CosWrapper cos() {
+        return SpringHelper.instance().getBean(CosWrapper.class);
+    }
+
     @Resource
     private DfsProperties dfsProperties;
 
     @Override
     public UploadInfo upload(byte[] bytes, long fileSize, String contentType, String extension) {
+        Assert.notNull(bytes, () -> new ApiException("-1", "文件字节不能为空"));
+        Assert.isFalse(bytes.length == 0, () -> new ApiException("-1", "文件字节不能为空"));
+        Assert.notEmpty(contentType, () -> new ApiException("-1", "文件类型不能为空"));
+        Assert.notEmpty(extension, () -> new ApiException("-1", "文件扩展名不能为空"));
         switch (dfsProperties.getType()) {
             case MINIO:
                 return mimIo().upload(bytes, fileSize, contentType, extension);
             case FAST_DFS:
                 return fastDfs().upload(bytes, fileSize, extension);
+            case COS:
+                return cos().upload(bytes, fileSize, contentType, extension);
             default:
                 throw new ApiException("-1", "暂不支持的上传类型");
         }
@@ -52,11 +64,15 @@ public class DfsServiceImpl implements DfsService {
 
     @Override
     public InputStream download(String group, String path) {
+        Assert.notEmpty(group, () -> new ApiException("-1", "文件组或bucket不能为空"));
+        Assert.notEmpty(path, () -> new ApiException("-1", "文件存储路径不能为空"));
         switch (dfsProperties.getType()) {
             case MINIO:
                 return mimIo().download(group, path);
             case FAST_DFS:
                 return fastDfs().download(group, path);
+            case COS:
+                return cos().download(group, path);
             default:
                 throw new ApiException("-1", "暂不支持的文件下载类型");
         }

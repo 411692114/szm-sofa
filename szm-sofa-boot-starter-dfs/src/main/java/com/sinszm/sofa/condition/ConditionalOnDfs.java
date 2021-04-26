@@ -33,6 +33,16 @@ public class ConditionalOnDfs extends SpringBootCondition {
 
     private static final String MIN_IO_BUCKET = "dfs.minio.bucket";
 
+    private static final String COS_SECRET_ID = "dfs.cos.secret-id";
+
+    private static final String COS_SECRET_KEY = "dfs.cos.secret-key";
+
+    private static final String COS_REGION = "dfs.cos.region";
+
+    private static final String COS_BUCKET = "dfs.cos.bucket";
+
+    private static final String COS_APPID = "dfs.cos.appid";
+
     private static final AtomicInteger INIT = new AtomicInteger(0);
 
     private <T> T propValue(ConditionContext context, String key, Class<T> cls) {
@@ -57,6 +67,13 @@ public class ConditionalOnDfs extends SpringBootCondition {
                     Assert.notEmpty(BaseUtil.trim(propValue(context, MIN_IO_ACCESS, String.class)), () -> new ApiException("-1", MIN_IO_ACCESS + "不能为空"));
                     Assert.notEmpty(BaseUtil.trim(propValue(context, MIN_IO_SECRET, String.class)), () -> new ApiException("-1", MIN_IO_SECRET + "不能为空"));
                     Assert.notEmpty(BaseUtil.trim(propValue(context, MIN_IO_BUCKET, String.class)), () -> new ApiException("-1", MIN_IO_BUCKET + "不能为空"));
+                    break;
+                case COS:
+                    Assert.notEmpty(BaseUtil.trim(propValue(context, COS_SECRET_ID, String.class)), () -> new ApiException("-1", COS_SECRET_ID + "不能为空"));
+                    Assert.notEmpty(BaseUtil.trim(propValue(context, COS_SECRET_KEY, String.class)), () -> new ApiException("-1", COS_SECRET_KEY + "不能为空"));
+                    Assert.notEmpty(BaseUtil.trim(propValue(context, COS_REGION, String.class)), () -> new ApiException("-1", COS_REGION + "不能为空"));
+                    Assert.notEmpty(BaseUtil.trim(propValue(context, COS_BUCKET, String.class)), () -> new ApiException("-1", COS_BUCKET + "不能为空"));
+                    Assert.notEmpty(BaseUtil.trim(propValue(context, COS_APPID, String.class)), () -> new ApiException("-1", COS_APPID + "不能为空"));
                     break;
                 default:
                     throw new ApiException("-1", "未实现的分布式文件服务类型");

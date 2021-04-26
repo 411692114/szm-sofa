@@ -14,6 +14,11 @@ public enum DfsType {
     /**
      * MinIO
      */
-    MINIO
+    MINIO,
+
+    /**
+     * 腾讯云对象存储
+     */
+    COS
 
 }

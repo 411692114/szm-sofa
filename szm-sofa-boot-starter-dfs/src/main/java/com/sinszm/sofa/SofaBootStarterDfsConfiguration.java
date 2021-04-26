@@ -1,7 +1,15 @@
 package com.sinszm.sofa;
 
 
+import cn.hutool.core.util.StrUtil;
 import com.github.tobato.fastdfs.FdfsClientConfig;
+import com.qcloud.cos.COSClient;
+import com.qcloud.cos.ClientConfig;
+import com.qcloud.cos.auth.BasicCOSCredentials;
+import com.qcloud.cos.auth.COSCredentials;
+import com.qcloud.cos.http.HttpProtocol;
+import com.qcloud.cos.model.CreateBucketRequest;
+import com.qcloud.cos.region.Region;
 import com.sinszm.sofa.annotation.EnableDFS;
 import com.sinszm.sofa.enums.DfsType;
 import com.sinszm.sofa.util.BaseUtil;
@@ -22,7 +30,7 @@ import java.util.Optional;
  * @author sinszm
  */
 @PropertySource("classpath:settings.properties")
-@EnableConfigurationProperties({DfsProperties.class,MinIoProperties.class})
+@EnableConfigurationProperties({DfsProperties.class,MinIoProperties.class,CosProperties.class})
 public class SofaBootStarterDfsConfiguration {
 
     @EnableDFS(DfsType.FAST_DFS)
@@ -73,6 +81,49 @@ public class SofaBootStarterDfsConfiguration {
                 minioClient.makeBucket(MakeBucketArgs.builder()
                         .bucket(BaseUtil.trim(minIoProperties.getBucket()))
                         .build());
+            }
+        }
+
+    }
+
+    @EnableDFS(DfsType.COS)
+    @Configuration
+    public static class CosConfiguration implements CommandLineRunner {
+
+        @Resource
+        private CosProperties cosProperties;
+
+        /**
+         * COS客户端
+         * <p>
+         *     1.需要使用为私有访问；
+         *     2.需要设置为标准存储模式；
+         *     3.开启SSE-COS加密；
+         * </p>
+         * @return  客户端对象
+         */
+        @Bean
+        public COSClient cosClient() {
+            COSCredentials cred = new BasicCOSCredentials(
+                    StrUtil.trimToEmpty(cosProperties.getSecretId()),
+                    StrUtil.trimToEmpty(cosProperties.getSecretKey())
+            );
+            ClientConfig clientConfig = new ClientConfig(new Region(
+                    StrUtil.trimToEmpty(cosProperties.getRegion())
+            ));
+            clientConfig.setHttpProtocol(HttpProtocol.https);
+            return new COSClient(cred, clientConfig);
+        }
+
+        @Resource
+        private COSClient cosClient;
+
+        @Override
+        public void run(String... args) {
+            boolean state = cosClient.doesBucketExist(BaseUtil.trim(cosProperties.bucketName()));
+            if (!state) {
+                CreateBucketRequest request = new CreateBucketRequest(BaseUtil.trim(cosProperties.bucketName()));
+                cosClient.createBucket(request);
             }
         }
 
