@@ -15,13 +15,19 @@ swagger:
   enable: true
 
 dfs:
-  type: minio
+  type: cos
   minio:
     endpoint: http://192.168.8.185
     port: 9000
     access-key: AKIA555FOD555EXAMPLE
     secret-key: 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
     bucket: hello
+  cos:
+    appid: 1252321235
+    bucket: demo2
+    region: ap-chongqing
+    secret-id: AKIDjh23Gz5vfip6coyfzCAVcpW9g1d4xPRf
+    secret-key: jn6fzIiBH3ChbSHglh1uvRohhjne2RR3
 fdfs:
   tracker-list:
     - 192.168.8.185:22122
