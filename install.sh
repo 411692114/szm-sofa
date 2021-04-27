@@ -7,7 +7,7 @@ export GPG_TTY=$(tty)
 git pull
 
 # 发布
-mvn clean -pl .,szm-sofa-boot-starter,szm-sofa-boot-starter-orm install
+mvn clean install
 
 #清理
 mvn clean
