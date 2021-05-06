@@ -72,3 +72,8 @@ spring:
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+jedis:
+  model: standalone
+  address: 192.168.8.196:6379
+  database: 14

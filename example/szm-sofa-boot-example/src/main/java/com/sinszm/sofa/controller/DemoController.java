@@ -1,9 +1,11 @@
 package com.sinszm.sofa.controller;
 
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.io.file.FileNameUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
+import com.sinszm.sofa.JedisUtil;
 import com.sinszm.sofa.Swagger3Properties;
 import com.sinszm.sofa.annotation.ResultBody;
 import com.sinszm.sofa.response.Result;
@@ -60,11 +62,18 @@ public class DemoController {
         System.out.println("adfasfjasfalksfaskfjlasfasdf");
     }
 
+
+    @Resource
+    private JedisUtil<String> stringJedisUtil;
+
     @ApiOperation(value = "测试Exception")
     @GetMapping(value = "/hello5", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @ResultBody
-    public Integer hello5() {
-        return Integer.MAX_VALUE;
+    public Result<String> hello5() {
+        String key = "{szm.test}.test2";
+        if (!stringJedisUtil.exists(key)) {
+            stringJedisUtil.set(key, DateUtil.now(), 10);
+        }
+        return ResultUtil.ok(stringJedisUtil.get(key));
     }
 
     @Resource

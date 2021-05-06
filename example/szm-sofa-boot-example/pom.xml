@@ -63,6 +63,11 @@
             <artifactId>szm-sofa-boot-starter-dfs</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.sinszm.sofa</groupId>
+            <artifactId>szm-sofa-boot-starter-jedis</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -84,6 +89,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
