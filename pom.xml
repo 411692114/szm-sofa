@@ -64,6 +64,7 @@
         <spring.plugin.version>2.0.0.RELEASE</spring.plugin.version>
         <mybatis.plus.version>3.4.2</mybatis.plus.version>
         <mybatis.dynamic.version>3.3.2</mybatis.dynamic.version>
+        <jedis.version>3.6.0</jedis.version>
         <!-- 模块版本 -->
         <szm.version>1.0.2</szm.version>
     </properties>
@@ -139,6 +140,12 @@
             </dependency>
 
             <dependency>
+                <groupId>redis.clients</groupId>
+                <artifactId>jedis</artifactId>
+                <version>${jedis.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>com.sinszm.sofa</groupId>
                 <artifactId>szm-sofa-boot-starter</artifactId>
                 <version>${szm.version}</version>
@@ -153,6 +160,12 @@
             <dependency>
                 <groupId>com.sinszm.sofa</groupId>
                 <artifactId>szm-sofa-boot-starter-dfs</artifactId>
+                <version>${szm.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.sinszm.sofa</groupId>
+                <artifactId>szm-sofa-boot-starter-jedis</artifactId>
                 <version>${szm.version}</version>
             </dependency>
         </dependencies>
@@ -177,6 +190,7 @@
         <module>szm-sofa-boot-starter</module>
         <module>szm-sofa-boot-starter-orm</module>
         <module>szm-sofa-boot-starter-dfs</module>
+        <module>szm-sofa-boot-starter-jedis</module>
         <!-- 示例 -->
         <module>example/szm-sofa-boot-example</module>
     </modules>
