@@ -185,14 +185,12 @@
         </dependency>
     </dependencies>
 
+    <!-- 组件 -->
     <modules>
-        <!-- 组件 -->
         <module>szm-sofa-boot-starter</module>
         <module>szm-sofa-boot-starter-orm</module>
         <module>szm-sofa-boot-starter-dfs</module>
         <module>szm-sofa-boot-starter-jedis</module>
-        <!-- 示例 -->
-        <module>example/szm-sofa-boot-example</module>
     </modules>
 
     <!--配置编译插件-->
