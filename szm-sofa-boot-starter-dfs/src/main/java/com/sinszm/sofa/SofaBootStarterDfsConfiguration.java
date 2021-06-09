@@ -58,7 +58,7 @@ public class SofaBootStarterDfsConfiguration {
             return MinioClient.builder()
                     .endpoint(
                             BaseUtil.trim(minIoProperties.getEndpoint()),
-                            Optional.ofNullable(minIoProperties.getPort()).orElse(80),
+                            Optional.ofNullable(minIoProperties.getPort()).orElse(minIoProperties.isSecure()?443:80),
                             minIoProperties.isSecure()
                     )
                     .credentials(

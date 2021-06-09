@@ -28,7 +28,7 @@ public class MinIoProperties {
     private Integer port;
 
     /**
-     * 如果是true，则用的是https而不是http,默认值是true。
+     * 如果是true，则用的是https而不是http,默认值是false。
      */
     private boolean secure = false;
 
