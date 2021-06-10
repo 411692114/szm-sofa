@@ -5,7 +5,7 @@
 
     <groupId>com.sinszm.sofa</groupId>
     <artifactId>szm-sofa</artifactId>
-    <version>1.0.6</version>
+    <version>1.0.7</version>
     <packaging>pom</packaging>
 
     <name>szm-sofa</name>
@@ -66,7 +66,7 @@
         <mybatis.dynamic.version>3.3.2</mybatis.dynamic.version>
         <jedis.version>3.6.0</jedis.version>
         <!-- 模块版本 -->
-        <szm.version>1.0.6</szm.version>
+        <szm.version>1.0.7</szm.version>
     </properties>
 
     <dependencyManagement>
@@ -168,6 +168,12 @@
                 <artifactId>szm-sofa-boot-starter-jedis</artifactId>
                 <version>${szm.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.sinszm.sofa</groupId>
+                <artifactId>szm-sofa-boot-starter-order</artifactId>
+                <version>${szm.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -191,6 +197,7 @@
         <module>szm-sofa-boot-starter-orm</module>
         <module>szm-sofa-boot-starter-dfs</module>
         <module>szm-sofa-boot-starter-jedis</module>
+        <module>szm-sofa-boot-starter-order</module>
     </modules>
 
     <!--配置编译插件-->
