@@ -20,7 +20,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "szm_order")
+@Table(name = "ts_order")
 public class SzmOrder {
 
     /**

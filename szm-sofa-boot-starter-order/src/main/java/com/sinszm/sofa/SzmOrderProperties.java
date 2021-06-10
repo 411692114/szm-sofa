@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * szm订单属性
+ * 基础配置
  *
  * @author admin
  */

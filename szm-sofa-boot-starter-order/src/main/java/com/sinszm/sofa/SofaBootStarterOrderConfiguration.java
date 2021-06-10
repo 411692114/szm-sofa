@@ -3,7 +3,10 @@ package com.sinszm.sofa;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.system.SystemUtil;
 import com.sinszm.sofa.annotation.EnableOrderDataSource;
+import com.sinszm.sofa.exception.ApiException;
+import com.sinszm.sofa.response.StatusCode;
 import com.zaxxer.hikari.HikariDataSource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationContext;
@@ -24,9 +27,15 @@ import java.util.HashMap;
  *
  * @author sinszm
  */
+@Slf4j
 @EnableConfigurationProperties(SzmOrderProperties.class)
 public class SofaBootStarterOrderConfiguration {
 
+    /**
+     * 内置数据源
+     *
+     * @return {@link DataSource}
+     */
     @EnableOrderDataSource
     @Bean(name = "sqliteDataSource")
     public DataSource dataSource() {
@@ -37,6 +46,11 @@ public class SofaBootStarterOrderConfiguration {
         return ds;
     }
 
+    /**
+     * jpa配置
+     *
+     * @author sinszm
+     */
     @Configuration
     @EnableJpaRepositories(
             basePackages = "com.sinszm.sofa.repo",
@@ -64,10 +78,16 @@ public class SofaBootStarterOrderConfiguration {
             try {
                 return context.getBean(szmOrderProperties.getDatasource(), DataSource.class);
             } catch (BeansException e) {
-                return context.getBean("sqliteDataSource", DataSource.class);
+                log.error("数据源读取异常!", e);
+                throw new ApiException(StatusCode.SYSTEM_ERROR);
             }
         }
 
+        /**
+         * hibernate供应商适配器
+         *
+         * @return {@link HibernateJpaVendorAdapter}
+         */
         @Bean
         public HibernateJpaVendorAdapter hibernateVendorAdapter() {
             HibernateJpaVendorAdapter adapter = new HibernateJpaVendorAdapter();
@@ -79,6 +99,11 @@ public class SofaBootStarterOrderConfiguration {
         @Resource
         private HibernateJpaVendorAdapter hibernateVendorAdapter;
 
+        /**
+         * 实体管理器
+         *
+         * @return {@link LocalContainerEntityManagerFactoryBean}
+         */
         @Bean
         public LocalContainerEntityManagerFactoryBean orderEntityManagerFactory() {
             LocalContainerEntityManagerFactoryBean bean = new LocalContainerEntityManagerFactoryBean();
