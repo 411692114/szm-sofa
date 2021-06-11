@@ -27,12 +27,12 @@ public class SzmOrderProperties {
     private String datasource;
 
     /**
-     * 用户名
+     * 内置数据库的账号
      */
     private String username;
 
     /**
-     * 密码
+     * 内置数据库的密码
      */
     private String password;
 
