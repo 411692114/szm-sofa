@@ -21,7 +21,7 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @Entity
 @Table(name = "ts_order")
-public class SzmOrder {
+public class MasterOrder {
 
     /**
      * id

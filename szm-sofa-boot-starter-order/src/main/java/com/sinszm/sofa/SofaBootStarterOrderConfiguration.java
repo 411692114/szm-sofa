@@ -22,6 +22,9 @@ import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.util.HashMap;
 
+import static com.sinszm.sofa.support.Constant.DEFAULT_DATASOURCE_NAME;
+import static com.sinszm.sofa.support.Constant.TRANSACTION_MANAGER;
+
 /**
  * 配置加载中心
  *
@@ -37,7 +40,7 @@ public class SofaBootStarterOrderConfiguration {
      * @return {@link DataSource}
      */
     @EnableOrderDataSource
-    @Bean(name = "sqliteDataSource")
+    @Bean(name = DEFAULT_DATASOURCE_NAME)
     public DataSource dataSource() {
         String homeDir = SystemUtil.getUserInfo().getCurrentDir();
         HikariDataSource ds = new HikariDataSource();
@@ -53,9 +56,9 @@ public class SofaBootStarterOrderConfiguration {
      */
     @Configuration
     @EnableJpaRepositories(
-            basePackages = "com.sinszm.sofa.repo",
-            transactionManagerRef = "jpaTransactionManager",
-            entityManagerFactoryRef = "orderEntityManagerFactory"
+            basePackages = "com.sinszm.sofa.repository",
+            transactionManagerRef = TRANSACTION_MANAGER,
+            entityManagerFactoryRef = "masterTsEntityManagerFactory"
     )
     @EnableTransactionManagement
     public static class JpaConfiguration {
@@ -73,7 +76,7 @@ public class SofaBootStarterOrderConfiguration {
          */
         private DataSource dataSource() {
             if (!szmOrderProperties.hasDataSource()) {
-                return context.getBean("sqliteDataSource", DataSource.class);
+                return context.getBean(DEFAULT_DATASOURCE_NAME, DataSource.class);
             }
             try {
                 return context.getBean(szmOrderProperties.getDatasource(), DataSource.class);
@@ -105,7 +108,7 @@ public class SofaBootStarterOrderConfiguration {
          * @return {@link LocalContainerEntityManagerFactoryBean}
          */
         @Bean
-        public LocalContainerEntityManagerFactoryBean orderEntityManagerFactory() {
+        public LocalContainerEntityManagerFactoryBean masterTsEntityManagerFactory() {
             LocalContainerEntityManagerFactoryBean bean = new LocalContainerEntityManagerFactoryBean();
             bean.setDataSource(dataSource());
             bean.setJpaVendorAdapter(hibernateVendorAdapter);
@@ -127,7 +130,7 @@ public class SofaBootStarterOrderConfiguration {
          *
          * @return {@link JpaTransactionManager}
          */
-        @Bean
+        @Bean(name = TRANSACTION_MANAGER)
         public JpaTransactionManager jpaTransactionManager() {
             JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
             jpaTransactionManager.setDataSource(dataSource());

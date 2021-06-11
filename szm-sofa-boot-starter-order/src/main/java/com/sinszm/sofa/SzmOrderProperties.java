@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import static com.sinszm.sofa.support.Constant.DEFAULT_DATASOURCE_DIALECT;
+
 /**
  * 基础配置
  *
@@ -45,7 +47,7 @@ public class SzmOrderProperties {
      */
     public String getDialect() {
         if (!hasDataSource()) {
-            return "com.sinszm.sofa.support.SQLiteDialect";
+            return DEFAULT_DATASOURCE_DIALECT;
         }
         return BaseUtil.trim(this.hibernateDialect);
     }
