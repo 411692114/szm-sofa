@@ -1,6 +1,6 @@
 package com.sinszm.sofa.service.impl;
 
-import com.sinszm.sofa.repository.MasterOrderRepository;
+import com.sinszm.sofa.repository.*;
 import com.sinszm.sofa.service.OrderApplicationService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -25,5 +25,15 @@ public class OrderApplicationServiceImpl implements OrderApplicationService {
 
     @Resource
     private MasterOrderRepository masterOrderRepository;
+    @Resource
+    private TsAftermarketRepository tsAftermarketRepository;
+    @Resource
+    private TsBuyerDetailRepository tsBuyerDetailRepository;
+    @Resource
+    private TsEvaluativeRepository tsEvaluativeRepository;
+    @Resource
+    private TsOperationRecordRepository tsOperationRecordRepository;
+    @Resource
+    private TsSellerDetailRepository tsSellerDetailRepository;
 
 }
