@@ -12,7 +12,6 @@ import org.springframework.context.annotation.ConditionContext;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * DFS条件判断器
@@ -22,8 +21,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class ConditionalOnDfs extends SpringBootCondition {
 
     private static final String DFS_TYPE = "dfs.type";
-
-    private static final String FAST_DFS_URL = "fdfs.tracker-list";
 
     private static final String MIN_IO_ENDPOINT = "dfs.minio.endpoint";
 
@@ -51,8 +48,6 @@ public class ConditionalOnDfs extends SpringBootCondition {
 
     private static final String OSS_ACCESS_BUCKET = "dfs.oss.bucket";
 
-    private static final AtomicInteger INIT = new AtomicInteger(0);
-
     private <T> T propValue(ConditionContext context, String key, Class<T> cls) {
         return context.getEnvironment().getProperty(key, cls);
     }
@@ -64,12 +59,6 @@ public class ConditionalOnDfs extends SpringBootCondition {
         DfsType expression = (DfsType) Objects.requireNonNull(metadata.getAnnotationAttributes(EnableDFS.class.getName())).get("value");
         if (expression == dfsType) {
             switch (dfsType) {
-                case FAST_DFS:
-                    if (log.isDebugEnabled() && INIT.getAndIncrement() == 0) {
-                        log.warn("\n~~~~~~~~~请检查分布式文件服务存储地址确保必须配置：【 {} 】~~~~~~~~~", FAST_DFS_URL);
-                        log.warn("Check the distributed file service storage address to ensure that it must be configured: [ {} ]", FAST_DFS_URL);
-                    }
-                    break;
                 case MINIO:
                     Assert.notEmpty(BaseUtil.trim(propValue(context, MIN_IO_ENDPOINT, String.class)), () -> new ApiException("-1", MIN_IO_ENDPOINT + "不能为空"));
                     Assert.notEmpty(BaseUtil.trim(propValue(context, MIN_IO_ACCESS, String.class)), () -> new ApiException("-1", MIN_IO_ACCESS + "不能为空"));

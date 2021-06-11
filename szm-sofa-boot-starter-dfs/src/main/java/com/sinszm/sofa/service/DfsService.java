@@ -24,19 +24,19 @@ public interface DfsService {
 
     /**
      * 下载文件
-     * @param group         文件组或bucket
+     * @param bucket        文件组或bucket
      * @param path          存储路径
      * @return              文件下载
      */
-    InputStream download(String group, String path);
+    InputStream download(String bucket, String path);
 
     /**
      * 下载文件流
      * @param fileName      文件名称（需要带后缀扩展名）
-     * @param group         文件组或bucket
+     * @param bucket        文件组或bucket
      * @param path          存储路径
      * @return              文件流下载
      */
-    ResponseEntity<InputStreamResource> download(String fileName, String group, String path);
+    ResponseEntity<InputStreamResource> download(String fileName, String bucket, String path);
 
 }

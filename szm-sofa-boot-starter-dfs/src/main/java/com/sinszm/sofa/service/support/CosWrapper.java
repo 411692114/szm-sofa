@@ -106,6 +106,7 @@ public class CosWrapper {
         log.info("分组：{}, 存储路径：{}, 耗时：{}", result.getBucketName(), result.getKey(), (System.currentTimeMillis() - startTime) / 1000 + "s");
         return UploadInfo.builder()
                 .group(result.getBucketName())
+                .bucket(result.getBucketName())
                 .path(result.getKey())
                 .build();
     }

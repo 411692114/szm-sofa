@@ -63,6 +63,7 @@ public class OSSWrapper {
         );
         return UploadInfo.builder()
                 .group(BaseUtil.trim(ossProperties.getBucket()))
+                .bucket(BaseUtil.trim(ossProperties.getBucket()))
                 .path(StrUtil.join("/", filePath, fileName))
                 .build();
     }

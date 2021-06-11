@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 public class UploadInfo {
 
     @ApiModelProperty(
-            value = "分组或bucket",
+            value = "bucket",
             dataType = "String",
             required = true,
             example = ""
@@ -30,7 +30,15 @@ public class UploadInfo {
     String group;
 
     @ApiModelProperty(
-            value = "存储路径或name",
+            value = "bucket",
+            dataType = "String",
+            required = true,
+            example = ""
+    )
+    String bucket;
+
+    @ApiModelProperty(
+            value = "存储路径",
             dataType = "String",
             required = true,
             example = ""
