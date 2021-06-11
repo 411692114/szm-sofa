@@ -16,11 +16,11 @@ public class Constant {
     /**
      * 默认的数据源名称
      */
-    public static final String DEFAULT_DATASOURCE_NAME = "sqliteDataSource";
+    public static final String DEFAULT_DATASOURCE_NAME = "h2DataSource";
 
     /**
      * 默认数据源方言
      */
-    public static final String DEFAULT_DATASOURCE_DIALECT = "com.sinszm.sofa.support.SQLiteDialect";
+    public static final String DEFAULT_DATASOURCE_DIALECT = "org.hibernate.dialect.H2Dialect";
 
 }

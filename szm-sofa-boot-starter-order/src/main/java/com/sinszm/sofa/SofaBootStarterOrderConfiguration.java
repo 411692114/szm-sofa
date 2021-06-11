@@ -44,8 +44,8 @@ public class SofaBootStarterOrderConfiguration {
     public DataSource dataSource() {
         String homeDir = SystemUtil.getUserInfo().getCurrentDir();
         HikariDataSource ds = new HikariDataSource();
-        ds.setDriverClassName("org.sqlite.JDBC");
-        ds.setJdbcUrl("jdbc:sqlite:" + homeDir + "/order.db");
+        ds.setDriverClassName("org.h2.Driver");
+        ds.setJdbcUrl("jdbc:h2:" + homeDir + "/moDb");
         return ds;
     }
 
