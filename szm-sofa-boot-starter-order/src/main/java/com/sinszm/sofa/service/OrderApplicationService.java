@@ -38,7 +38,7 @@ public interface OrderApplicationService {
 
     // TODO: 2021/6/11 评价订单，只有已完成的订单才可以进行评价操作
 
-    // TODO 根据订单ID或商户订单号获取订单评价信息
+    // TODO 根据订单ID或商户订单号获取订单评价信息，当订单没有完成时查询的评价信息详情设置为空信息返回
 
 
 
