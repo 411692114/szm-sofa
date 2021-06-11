@@ -40,7 +40,7 @@ public class TsOperationRecord {
     private String orderId;
 
     /**
-     * 评价者用户ID
+     * 用户ID
      */
     @Column(name = "user_id", length = 64, nullable = false)
     private String userId;
