@@ -4,7 +4,6 @@ package com.sinszm.sofa.support;
  * 常数
  *
  * @author admin
- * @date 2021/06/11
  */
 public class Constant {
 

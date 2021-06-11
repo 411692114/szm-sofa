@@ -13,7 +13,6 @@ import static com.sinszm.sofa.support.Constant.TRANSACTION_MANAGER;
  * 订单应用服务impl
  *
  * @author admin
- * @date 2021/06/11
  */
 @Transactional(transactionManager = TRANSACTION_MANAGER, rollbackFor = Exception.class)
 @Service
