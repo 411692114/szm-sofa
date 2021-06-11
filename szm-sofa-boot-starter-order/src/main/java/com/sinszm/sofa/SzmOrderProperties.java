@@ -27,6 +27,16 @@ public class SzmOrderProperties {
     private String datasource;
 
     /**
+     * 用户名
+     */
+    private String username;
+
+    /**
+     * 密码
+     */
+    private String password;
+
+    /**
      * 方言
      */
     private String hibernateDialect;

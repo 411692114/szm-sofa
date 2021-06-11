@@ -14,6 +14,11 @@ public class Constant {
     public static final String TRANSACTION_MANAGER = "jpaTransactionManager";
 
     /**
+     * 实体管理器工厂参考
+     */
+    public static final String ENTITY_MANAGER_FACTORY_REF = "masterTsEntityManagerFactory";
+
+    /**
      * 默认的数据源名称
      */
     public static final String DEFAULT_DATASOURCE_NAME = "h2DataSource";

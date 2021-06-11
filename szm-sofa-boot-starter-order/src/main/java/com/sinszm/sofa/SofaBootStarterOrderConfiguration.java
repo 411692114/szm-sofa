@@ -5,6 +5,7 @@ import cn.hutool.system.SystemUtil;
 import com.sinszm.sofa.annotation.EnableOrderDataSource;
 import com.sinszm.sofa.exception.ApiException;
 import com.sinszm.sofa.response.StatusCode;
+import com.sinszm.sofa.util.BaseUtil;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
@@ -22,8 +23,7 @@ import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.util.HashMap;
 
-import static com.sinszm.sofa.support.Constant.DEFAULT_DATASOURCE_NAME;
-import static com.sinszm.sofa.support.Constant.TRANSACTION_MANAGER;
+import static com.sinszm.sofa.support.Constant.*;
 
 /**
  * 配置加载中心
@@ -33,6 +33,9 @@ import static com.sinszm.sofa.support.Constant.TRANSACTION_MANAGER;
 @Slf4j
 @EnableConfigurationProperties(SzmOrderProperties.class)
 public class SofaBootStarterOrderConfiguration {
+
+    @Resource
+    private SzmOrderProperties szmOrderProperties;
 
     /**
      * 内置数据源
@@ -46,6 +49,11 @@ public class SofaBootStarterOrderConfiguration {
         HikariDataSource ds = new HikariDataSource();
         ds.setDriverClassName("org.h2.Driver");
         ds.setJdbcUrl("jdbc:h2:" + homeDir + "/moDb");
+        if (!BaseUtil.isEmpty(szmOrderProperties.getUsername())
+                && !BaseUtil.isEmpty(szmOrderProperties.getPassword())) {
+            ds.setUsername(BaseUtil.trim(szmOrderProperties.getUsername()));
+            ds.setPassword(BaseUtil.trim(szmOrderProperties.getPassword()));
+        }
         return ds;
     }
 
@@ -58,7 +66,7 @@ public class SofaBootStarterOrderConfiguration {
     @EnableJpaRepositories(
             basePackages = "com.sinszm.sofa.repository",
             transactionManagerRef = TRANSACTION_MANAGER,
-            entityManagerFactoryRef = "masterTsEntityManagerFactory"
+            entityManagerFactoryRef = ENTITY_MANAGER_FACTORY_REF
     )
     @EnableTransactionManagement
     public static class JpaConfiguration {
@@ -107,7 +115,7 @@ public class SofaBootStarterOrderConfiguration {
          *
          * @return {@link LocalContainerEntityManagerFactoryBean}
          */
-        @Bean
+        @Bean(name = ENTITY_MANAGER_FACTORY_REF)
         public LocalContainerEntityManagerFactoryBean masterTsEntityManagerFactory() {
             LocalContainerEntityManagerFactoryBean bean = new LocalContainerEntityManagerFactoryBean();
             bean.setDataSource(dataSource());
