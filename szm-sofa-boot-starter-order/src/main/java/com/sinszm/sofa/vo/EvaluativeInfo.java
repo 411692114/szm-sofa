@@ -26,19 +26,35 @@ public class EvaluativeInfo implements Serializable {
      */
     private String orderId;
 
+    public EvaluativeInfo checkOrderId() {
+        return this;
+    }
+
     /**
      * 评价者用户ID
      */
     private String userId;
+
+    public EvaluativeInfo checkUserId() {
+        return this;
+    }
 
     /**
      * 评价级别
      */
     private Evaluative level;
 
+    public EvaluativeInfo checkLevel() {
+        return this;
+    }
+
     /**
      * 描述
      */
     private String describe;
+
+    public EvaluativeInfo checkDescribe() {
+        return this;
+    }
 
 }

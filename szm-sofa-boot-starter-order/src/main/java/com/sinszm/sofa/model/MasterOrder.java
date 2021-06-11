@@ -21,6 +21,8 @@ import java.util.Date;
 @AllArgsConstructor
 @Entity
 @Table(name = "ts_order", indexes = {
+        @Index(name = "ts_order_order_no",columnList = "order_no"),
+        @Index(name = "ts_order_pay_no",columnList = "pay_no"),
         @Index(name = "ts_order_goods_id",columnList = "goods_id"),
         @Index(name = "ts_order_seller_id",columnList = "seller_id"),
         @Index(name = "ts_order_buyer_id",columnList = "buyer_id"),
@@ -34,6 +36,18 @@ public class MasterOrder {
     @Id
     @Column(name = "id", length = 32, nullable = false)
     private String id;
+
+    /**
+     * 商户订单号
+     */
+    @Column(name = "order_no", length = 64, nullable = false, unique = true)
+    private String orderNo;
+
+    /**
+     * 支付号
+     */
+    @Column(name = "pay_no", length = 64)
+    private String payNo;
 
     /**
      * 商品id

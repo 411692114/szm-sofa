@@ -25,34 +25,62 @@ public class Buyer implements Serializable {
      */
     private String userId;
 
+    public Buyer checkUserId() {
+        return this;
+    }
+
     /**
      * 用户名
      */
     private String userName;
+
+    public Buyer checkUserName() {
+        return this;
+    }
 
     /**
      * 开放id
      */
     private String openId;
 
+    public Buyer checkOpenId() {
+        return this;
+    }
+
     /**
      * 聚合ID
      */
     private String unionId;
+
+    public Buyer checkUnionId() {
+        return this;
+    }
 
     /**
      * 电话
      */
     private String mobile;
 
+    public Buyer checkMobile() {
+        return this;
+    }
+
     /**
      * 地址
      */
     private String address;
 
+    public Buyer checkAddress() {
+        return this;
+    }
+
     /**
      * 收货地址
      */
     private String receivingAddress;
+
+    public Buyer checkReceivingAddress() {
+        return this;
+    }
 
 }

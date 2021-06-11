@@ -25,25 +25,44 @@ public class AftermarketInfo implements Serializable {
      */
     private String orderId;
 
+    public AftermarketInfo checkOrderId() {
+        return this;
+    }
+
     /**
      * 售后发起人用户ID
      */
     private String userId;
+
+    public AftermarketInfo checkUserId() {
+        return this;
+    }
 
     /**
      * 退费金额
      */
     private Double refundFee;
 
+    public AftermarketInfo checkRefundFee() {
+        return this;
+    }
+
     /**
      * 退货数量
      */
     private Integer refundGoodsNum;
+
+    public AftermarketInfo refundGoodsNum() {
+        return this;
+    }
 
     /**
      * 退款原因
      */
     private String refundReasons;
 
+    public AftermarketInfo checkRefundReasons() {
+        return this;
+    }
 
 }

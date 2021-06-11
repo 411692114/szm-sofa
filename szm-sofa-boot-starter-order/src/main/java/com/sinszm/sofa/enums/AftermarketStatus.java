@@ -20,6 +20,11 @@ public enum AftermarketStatus {
     /**
      * 已完成
      */
-    COMPLETED
+    COMPLETED,
+
+    /**
+     * 取消
+     */
+    CANCEL
 
 }

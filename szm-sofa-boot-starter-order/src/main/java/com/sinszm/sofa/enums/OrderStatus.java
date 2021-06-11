@@ -20,6 +20,11 @@ public enum OrderStatus {
     /**
      * 已完成
      */
-    COMPLETED
+    COMPLETED,
+
+    /**
+     * 取消
+     */
+    CANCEL
 
 }
