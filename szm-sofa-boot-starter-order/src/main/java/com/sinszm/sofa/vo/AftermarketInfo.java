@@ -1,11 +1,17 @@
 package com.sinszm.sofa.vo;
 
+import cn.hutool.core.lang.Assert;
+import cn.hutool.core.util.NumberUtil;
+import com.sinszm.sofa.util.BaseUtil;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.math.RoundingMode;
+
+import static com.sinszm.sofa.support.Constant.error;
 
 /**
  * 售后信息
@@ -26,6 +32,9 @@ public class AftermarketInfo implements Serializable {
     private String orderId;
 
     public AftermarketInfo checkOrderId() {
+        Assert.notNull(this.orderId, error("订单ID不能为空"));
+        Assert.isFalse(BaseUtil.trim(this.orderId).length() > 32, error("订单ID不能超过32个字符"));
+        this.orderId = BaseUtil.trim(this.orderId);
         return this;
     }
 
@@ -35,6 +44,9 @@ public class AftermarketInfo implements Serializable {
     private String userId;
 
     public AftermarketInfo checkUserId() {
+        Assert.notNull(this.userId, error("买家用户ID不能为空"));
+        Assert.isFalse(BaseUtil.trim(this.userId).length() > 64, error("买家用户ID不能超过64个字符"));
+        this.userId = BaseUtil.trim(this.userId);
         return this;
     }
 
@@ -44,6 +56,7 @@ public class AftermarketInfo implements Serializable {
     private Double refundFee;
 
     public AftermarketInfo checkRefundFee() {
+        this.refundFee = this.refundFee == null ? 0.0 : NumberUtil.round(this.refundFee, 2, RoundingMode.HALF_EVEN).doubleValue();
         return this;
     }
 
@@ -52,7 +65,8 @@ public class AftermarketInfo implements Serializable {
      */
     private Integer refundGoodsNum;
 
-    public AftermarketInfo refundGoodsNum() {
+    public AftermarketInfo checkRefundGoodsNum() {
+        this.refundGoodsNum = this.refundGoodsNum == null ? 0 : this.refundGoodsNum;
         return this;
     }
 
@@ -62,7 +76,24 @@ public class AftermarketInfo implements Serializable {
     private String refundReasons;
 
     public AftermarketInfo checkRefundReasons() {
+        if (!BaseUtil.isEmpty(this.refundReasons)) {
+            Assert.isFalse(BaseUtil.trim(this.refundReasons).length() > 200, error("退款原因不能超过200个字符"));
+        }
+        this.refundReasons = BaseUtil.trim(this.refundReasons);
         return this;
+    }
+
+    /**
+     * 检查所有
+     *
+     * @return {@link AftermarketInfo}
+     */
+    public AftermarketInfo checkAll() {
+        return this.checkOrderId()
+                .checkUserId()
+                .checkRefundFee()
+                .checkRefundGoodsNum()
+                .checkRefundReasons();
     }
 
 }

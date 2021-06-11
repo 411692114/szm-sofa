@@ -1,5 +1,11 @@
 package com.sinszm.sofa.support;
 
+import com.sinszm.sofa.exception.ApiException;
+import com.sinszm.sofa.util.BaseUtil;
+
+import java.util.Optional;
+import java.util.function.Supplier;
+
 /**
  * 常数
  *
@@ -26,5 +32,16 @@ public class Constant {
      * 默认数据源方言
      */
     public static final String DEFAULT_DATASOURCE_DIALECT = "org.hibernate.dialect.H2Dialect";
+
+    /**
+     * 验证的错误信息组装
+     *
+     * @param message 消息
+     * @return {@link Supplier<ApiException>}
+     */
+    public static Supplier<ApiException> error(String message) {
+        String msg = Optional.ofNullable(message).orElse("系统异常");
+        return () -> new ApiException("201", BaseUtil.trim(msg));
+    }
 
 }
