@@ -15,9 +15,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static com.sinszm.sofa.support.Constant.TRANSACTION_MANAGER;
 import static com.sinszm.sofa.support.Constant.error;
@@ -340,6 +338,20 @@ public class OrderApplicationServiceImpl implements OrderApplicationService {
                 .refundReasons(refundReasons)
                 .build();
         param.checkAll();
+        //判断是否有未取消的售后单，如果存在则不能进行售后
+        Optional<TsAftermarket> optional = tsAftermarketRepository.findOneByOrderIdAndAftermarketStatusIn(
+                param.getOrderId(),
+                Arrays.asList(AftermarketStatus.CREATE,AftermarketStatus.AFTER_SALES,AftermarketStatus.COMPLETED)
+        );
+        if (optional.isPresent()) {
+            throw error("存在进行中或已完成的售后信息，不可发起售后").get();
+        }
+        if (param.getRefundFee() > masterOrder.getPayAmount()) {
+            throw error("退款金额溢出").get();
+        }
+        if (param.getRefundGoodsNum() > masterOrder.getGoodsNum()) {
+            throw error("退货数量溢出").get();
+        }
         //创建售后信息
         TsAftermarket aftermarket = TsAftermarket.builder()
                 .id(BaseUtil.uuid())
@@ -425,15 +437,17 @@ public class OrderApplicationServiceImpl implements OrderApplicationService {
     }
 
     @Override
-    public TsAftermarket getAftermarketDetail(String orderId, String orderNo, String aftermarketId) {
-        Optional<MasterOrder> optional = masterOrderRepository.findOneByIdOrOrderNo(
-                BaseUtil.trim(orderId),
-                BaseUtil.trim(orderNo)
-        );
-        return tsAftermarketRepository.findOneByIdOrOrderId(
-                BaseUtil.trim(aftermarketId),
-                optional.isPresent() ? optional.get().getId() : ""
-        ).orElse(null);
+    public TsAftermarket getAftermarketDetail(String aftermarketId) {
+        return tsAftermarketRepository.getOne(BaseUtil.trim(aftermarketId));
+    }
+
+    @Override
+    public List<TsAftermarket> getAftermarketList(String orderId, String orderNo) {
+        Optional<MasterOrder> optional = masterOrderRepository.findOneByIdOrOrderNo(BaseUtil.trim(orderId), BaseUtil.trim(orderNo));
+        if (!optional.isPresent()) {
+            return new ArrayList<>();
+        }
+        return tsAftermarketRepository.findByOrderIdOrderByUpdateDateTimeDesc(optional.get().getId());
     }
 
 }

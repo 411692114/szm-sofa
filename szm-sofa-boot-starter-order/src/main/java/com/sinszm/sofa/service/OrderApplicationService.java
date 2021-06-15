@@ -167,10 +167,17 @@ public interface OrderApplicationService {
     /**
      * 根据订单ID、商户订单号或售后ID获取订单售后信息
      *
-     * @param orderId       订单id
-     * @param orderNo       商户订单号
      * @param aftermarketId 售后id
      * @return {@link TsAftermarket}
      */
-    TsAftermarket getAftermarketDetail(String orderId,String orderNo, String aftermarketId);
+    TsAftermarket getAftermarketDetail(String aftermarketId);
+
+    /**
+     * 根据订单ID或商户订单号查询售后列表
+     *
+     * @param orderId 订单id
+     * @param orderNo 商户订单号
+     * @return {@link List<TsAftermarket>}
+     */
+    List<TsAftermarket> getAftermarketList(String orderId, String orderNo);
 }
