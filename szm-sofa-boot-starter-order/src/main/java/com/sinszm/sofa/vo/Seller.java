@@ -2,6 +2,8 @@ package com.sinszm.sofa.vo;
 
 import cn.hutool.core.lang.Assert;
 import com.sinszm.sofa.util.BaseUtil;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,6 +22,7 @@ import static com.sinszm.sofa.support.Constant.error;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ApiModel(value = "卖家信息")
 public class Seller implements Serializable {
 
     private static final long serialVersionUID = 8898794839529332792L;
@@ -27,6 +30,7 @@ public class Seller implements Serializable {
     /**
      * 用户id
      */
+    @ApiModelProperty(value = "卖家用户ID")
     private String userId;
 
     public Seller checkUserId() {
@@ -39,6 +43,7 @@ public class Seller implements Serializable {
     /**
      * 用户名
      */
+    @ApiModelProperty(value = "卖家用户姓名或昵称")
     private String userName;
 
     public Seller checkUserName() {
@@ -52,6 +57,7 @@ public class Seller implements Serializable {
     /**
      * 店铺ID
      */
+    @ApiModelProperty(value = "店铺ID")
     private String shopId;
 
     public Seller checkShopId() {
@@ -65,6 +71,7 @@ public class Seller implements Serializable {
     /**
      * 店铺名称
      */
+    @ApiModelProperty(value = "店铺名称")
     private String shopName;
 
     public Seller checkShopName() {
@@ -78,6 +85,7 @@ public class Seller implements Serializable {
     /**
      * 店铺电话
      */
+    @ApiModelProperty(value = "店铺联系电话或客服电话")
     private String shopMobile;
 
     public Seller checkShopMobile() {
@@ -91,6 +99,7 @@ public class Seller implements Serializable {
     /**
      * 店铺地址
      */
+    @ApiModelProperty(value = "店铺联系地址")
     private String shopAddress;
 
     public Seller checkShopAddress() {

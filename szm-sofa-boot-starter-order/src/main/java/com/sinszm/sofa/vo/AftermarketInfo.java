@@ -3,6 +3,8 @@ package com.sinszm.sofa.vo;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.NumberUtil;
 import com.sinszm.sofa.util.BaseUtil;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,6 +24,7 @@ import static com.sinszm.sofa.support.Constant.error;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ApiModel(value = "售后信息")
 public class AftermarketInfo implements Serializable {
 
     private static final long serialVersionUID = 571135634691485280L;
@@ -29,6 +32,7 @@ public class AftermarketInfo implements Serializable {
     /**
      * 订单id
      */
+    @ApiModelProperty(value = "订单ID")
     private String orderId;
 
     public AftermarketInfo checkOrderId() {
@@ -41,6 +45,7 @@ public class AftermarketInfo implements Serializable {
     /**
      * 售后发起人用户ID
      */
+    @ApiModelProperty(value = "售后执行者ID")
     private String userId;
 
     public AftermarketInfo checkUserId() {
@@ -53,6 +58,7 @@ public class AftermarketInfo implements Serializable {
     /**
      * 退费金额
      */
+    @ApiModelProperty(value = "退款金额，精度元")
     private Double refundFee;
 
     public AftermarketInfo checkRefundFee() {
@@ -63,6 +69,7 @@ public class AftermarketInfo implements Serializable {
     /**
      * 退货数量
      */
+    @ApiModelProperty(value = "退货数量")
     private Integer refundGoodsNum;
 
     public AftermarketInfo checkRefundGoodsNum() {
@@ -73,6 +80,7 @@ public class AftermarketInfo implements Serializable {
     /**
      * 退款原因
      */
+    @ApiModelProperty(value = "退款或退货原因")
     private String refundReasons;
 
     public AftermarketInfo checkRefundReasons() {

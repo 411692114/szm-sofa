@@ -2,6 +2,8 @@ package com.sinszm.sofa.vo;
 
 import cn.hutool.core.lang.Assert;
 import com.sinszm.sofa.util.BaseUtil;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,6 +22,7 @@ import static com.sinszm.sofa.support.Constant.error;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ApiModel(value = "买家信息")
 public class Buyer implements Serializable {
 
     private static final long serialVersionUID = -4717329736737394134L;
@@ -27,6 +30,7 @@ public class Buyer implements Serializable {
     /**
      * 用户id
      */
+    @ApiModelProperty(value = "买家用户ID")
     private String userId;
 
     public Buyer checkUserId() {
@@ -39,6 +43,7 @@ public class Buyer implements Serializable {
     /**
      * 用户名
      */
+    @ApiModelProperty(value = "买家用户姓名或昵称")
     private String userName;
 
     public Buyer checkUserName() {
@@ -52,6 +57,7 @@ public class Buyer implements Serializable {
     /**
      * 开放id
      */
+    @ApiModelProperty(value = "买家微信openid")
     private String openId;
 
     public Buyer checkOpenId() {
@@ -65,6 +71,7 @@ public class Buyer implements Serializable {
     /**
      * 聚合ID
      */
+    @ApiModelProperty(value = "买家微信unionId")
     private String unionId;
 
     public Buyer checkUnionId() {
@@ -78,6 +85,7 @@ public class Buyer implements Serializable {
     /**
      * 电话
      */
+    @ApiModelProperty(value = "买家联系电话")
     private String mobile;
 
     public Buyer checkMobile() {
@@ -91,6 +99,7 @@ public class Buyer implements Serializable {
     /**
      * 地址
      */
+    @ApiModelProperty(value = "买家联系地址")
     private String address;
 
     public Buyer checkAddress() {
@@ -104,6 +113,7 @@ public class Buyer implements Serializable {
     /**
      * 收货地址
      */
+    @ApiModelProperty(value = "买家收获地址")
     private String receivingAddress;
 
     public Buyer checkReceivingAddress() {

@@ -3,6 +3,8 @@ package com.sinszm.sofa.vo;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.NumberUtil;
 import com.sinszm.sofa.util.BaseUtil;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,6 +24,7 @@ import static com.sinszm.sofa.support.Constant.error;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ApiModel(value = "商品信息")
 public class Goods implements Serializable {
 
     private static final long serialVersionUID = 709361594869050702L;
@@ -29,6 +32,7 @@ public class Goods implements Serializable {
     /**
      * 商品id
      */
+    @ApiModelProperty(value = "商品ID")
     private String goodsId;
 
     public Goods checkGoodsId() {
@@ -42,6 +46,7 @@ public class Goods implements Serializable {
     /**
      * 商品名称
      */
+    @ApiModelProperty(value = "商品名称")
     private String goodsName;
 
     public Goods checkGoodsName() {
@@ -55,6 +60,7 @@ public class Goods implements Serializable {
     /**
      * 规格
      */
+    @ApiModelProperty(value = "商品规格")
     private String specs;
 
     public Goods checkSpecs() {
@@ -68,6 +74,7 @@ public class Goods implements Serializable {
     /**
      * 描述
      */
+    @ApiModelProperty(value = "商品描述")
     private String describe;
 
     public Goods checkDescribe() {
@@ -81,6 +88,7 @@ public class Goods implements Serializable {
     /**
      * 单价（精度：元）
      */
+    @ApiModelProperty(value = "单价，精度元")
     private Double unitPrice;
 
     public Goods checkUnitPrice() {
@@ -92,6 +100,7 @@ public class Goods implements Serializable {
     /**
      * 商品数量
      */
+    @ApiModelProperty(value = "商品数量")
     private Integer goodsNum;
 
     public Goods checkGoodsNum() {
@@ -102,6 +111,7 @@ public class Goods implements Serializable {
     /**
      * 总价格
      */
+    @ApiModelProperty(value = "总价格，精度元")
     private Double totalPrice;
 
     public Goods checkTotalPrice() {
@@ -113,6 +123,7 @@ public class Goods implements Serializable {
     /**
      * 折扣金额
      */
+    @ApiModelProperty(value = "优惠价格，精度元")
     private Double discountAmount;
 
     public Goods checkDiscountAmount() {
@@ -124,6 +135,7 @@ public class Goods implements Serializable {
     /**
      * 支付金额
      */
+    @ApiModelProperty(value = "支付金额，精度元")
     private Double payAmount;
 
     public Goods checkPayAmount() {

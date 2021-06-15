@@ -1,6 +1,7 @@
 package com.sinszm.sofa.service.impl;
 
 import cn.hutool.core.lang.Assert;
+import com.sinszm.sofa.enums.AftermarketStatus;
 import com.sinszm.sofa.enums.Evaluative;
 import com.sinszm.sofa.enums.EvaluativeStatus;
 import com.sinszm.sofa.enums.OrderStatus;
@@ -8,10 +9,7 @@ import com.sinszm.sofa.model.*;
 import com.sinszm.sofa.repository.*;
 import com.sinszm.sofa.service.OrderApplicationService;
 import com.sinszm.sofa.util.BaseUtil;
-import com.sinszm.sofa.vo.Buyer;
-import com.sinszm.sofa.vo.Goods;
-import com.sinszm.sofa.vo.OrderDetailVo;
-import com.sinszm.sofa.vo.Seller;
+import com.sinszm.sofa.vo.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -150,7 +148,7 @@ public class OrderApplicationServiceImpl implements OrderApplicationService {
                 .orderId(order.getId())
                 .userId(order.getCreateUserId())
                 .createTime(order.getCreateDateTime())
-                .describes("创建了一笔订单, 商户订单号为: " + order.getOrderNo())
+                .describes("成功创建了一笔订单（商户订单号: " + order.getOrderNo() + "）。")
                 .build();
         tsOperationRecordRepository.save(record);
         //处理返回信息
@@ -195,7 +193,7 @@ public class OrderApplicationServiceImpl implements OrderApplicationService {
                 .orderId(masterOrder.getId())
                 .userId(masterOrder.getUpdateUserId())
                 .createTime(masterOrder.getUpdateDateTime())
-                .describes("商户订单号：" + masterOrder.getOrderNo() + "，已完成了支付，订单进行中。")
+                .describes("订单支付成功，状态变更进行中（商户订单号: " + masterOrder.getOrderNo() + "）。")
                 .build();
         tsOperationRecordRepository.save(record);
         return true;
@@ -220,10 +218,10 @@ public class OrderApplicationServiceImpl implements OrderApplicationService {
                 .orderId(masterOrder.getId())
                 .userId(masterOrder.getUpdateUserId())
                 .createTime(masterOrder.getUpdateDateTime())
-                .describes("商户订单号：" + masterOrder.getOrderNo() + "，订单已完成。")
+                .describes("订单已完成（商户订单号: " + masterOrder.getOrderNo() + "）。")
                 .build();
         tsOperationRecordRepository.save(record);
-        return false;
+        return true;
     }
 
     @Override
@@ -245,10 +243,10 @@ public class OrderApplicationServiceImpl implements OrderApplicationService {
                 .orderId(masterOrder.getId())
                 .userId(masterOrder.getUpdateUserId())
                 .createTime(masterOrder.getUpdateDateTime())
-                .describes("商户订单号：" + masterOrder.getOrderNo() + "，订单已取消。")
+                .describes("订单已取消（商户订单号: " + masterOrder.getOrderNo() + "）。")
                 .build();
         tsOperationRecordRepository.save(record);
-        return false;
+        return true;
     }
 
     @Override
@@ -306,7 +304,7 @@ public class OrderApplicationServiceImpl implements OrderApplicationService {
                 .orderId(masterOrder.getId())
                 .userId(evaluative.getUpdateUserId())
                 .createTime(evaluative.getUpdateDateTime())
-                .describes("商户订单号：" + masterOrder.getOrderNo() + "，已完成评价。")
+                .describes("订单已完成评价（商户订单号: " + masterOrder.getOrderNo() + "）。")
                 .build();
         tsOperationRecordRepository.save(record);
     }
@@ -328,6 +326,114 @@ public class OrderApplicationServiceImpl implements OrderApplicationService {
         MasterOrder masterOrder = masterOrderRepository.findOneByIdOrOrderNo(BaseUtil.trim(orderId), BaseUtil.trim(orderNo))
                 .orElseThrow(error("订单信息不存在"));
         return tsOperationRecordRepository.findByOrderIdOrderByCreateTimeAsc(masterOrder.getId());
+    }
+
+    @Override
+    public String createAftermarket(String orderId, String orderNo, String opUserId, Double refundFee, Integer refundGoodsNum, String refundReasons) {
+        MasterOrder masterOrder = masterOrderRepository.findOneByIdOrOrderNo(BaseUtil.trim(orderId), BaseUtil.trim(orderNo))
+                .orElseThrow(error("订单信息不存在"));
+        AftermarketInfo param = AftermarketInfo.builder()
+                .orderId(masterOrder.getId())
+                .userId(opUserId)
+                .refundFee(refundFee)
+                .refundGoodsNum(refundGoodsNum)
+                .refundReasons(refundReasons)
+                .build();
+        param.checkAll();
+        //创建售后信息
+        TsAftermarket aftermarket = TsAftermarket.builder()
+                .id(BaseUtil.uuid())
+                .orderId(param.getOrderId())
+                .userId(param.getUserId())
+                .refundFee(param.getRefundFee())
+                .refundGoodsNum(param.getRefundGoodsNum())
+                .refundReasons(param.getRefundReasons())
+                .aftermarketStatus(AftermarketStatus.CREATE)
+                .createUserId(param.getUserId())
+                .createDateTime(new Date())
+                .updateUserId(param.getUserId())
+                .updateDateTime(new Date())
+                .build();
+        tsAftermarketRepository.save(aftermarket);
+        //创建日志
+        TsOperationRecord record = TsOperationRecord.builder()
+                .id(BaseUtil.uuid())
+                .orderId(masterOrder.getId())
+                .userId(aftermarket.getCreateUserId())
+                .createTime(aftermarket.getCreateDateTime())
+                .describes("当前订单成功创建了一笔售后记录（商户订单号: " + masterOrder.getOrderNo() + "，售后单号：" + aftermarket.getId() + "）。")
+                .build();
+        tsOperationRecordRepository.save(record);
+        return aftermarket.getId();
+    }
+
+    @Override
+    public boolean executeAftermarket(String aftermarketId, String opUserId) {
+        Assert.notEmpty(BaseUtil.trim(opUserId), error("操作用户ID不能为空"));
+        Assert.isFalse(BaseUtil.trim(opUserId).length() > 64, error("操作用户ID不能超过64个字符"));
+        TsAftermarket aftermarket = tsAftermarketRepository.getOne(BaseUtil.trim(aftermarketId));
+        Assert.notNull(aftermarket, error("售后信息不存在"));
+        if (aftermarket.getAftermarketStatus() == AftermarketStatus.CANCEL) {
+            throw error("售后已取消，不能执行售后操作").get();
+        }
+        if (aftermarket.getAftermarketStatus() == AftermarketStatus.COMPLETED) {
+            throw error("售后已完成，不能执行售后操作").get();
+        }
+        aftermarket.setAftermarketStatus(aftermarket.getAftermarketStatus() == AftermarketStatus.CREATE ? AftermarketStatus.AFTER_SALES : AftermarketStatus.COMPLETED);
+        aftermarket.setUpdateUserId(BaseUtil.trim(opUserId));
+        aftermarket.setUpdateDateTime(new Date());
+        tsAftermarketRepository.save(aftermarket);
+        MasterOrder masterOrder = masterOrderRepository.findOneByIdOrOrderNo(aftermarket.getOrderId(), null)
+                .orElseThrow(error("订单信息不存在"));
+        //创建日志
+        TsOperationRecord record = TsOperationRecord.builder()
+                .id(BaseUtil.uuid())
+                .orderId(aftermarket.getOrderId())
+                .userId(BaseUtil.trim(opUserId))
+                .createTime(new Date())
+                .describes((aftermarket.getAftermarketStatus() == AftermarketStatus.AFTER_SALES ? "售后进行中" : "售后已完成") + "（商户订单号: " + masterOrder.getOrderNo() + "，售后单号：" + aftermarket.getId() + "）。")
+                .build();
+        tsOperationRecordRepository.save(record);
+        return true;
+    }
+
+    @Override
+    public boolean cancelAftermarket(String aftermarketId, String opUserId) {
+        Assert.notEmpty(BaseUtil.trim(opUserId), error("操作用户ID不能为空"));
+        Assert.isFalse(BaseUtil.trim(opUserId).length() > 64, error("操作用户ID不能超过64个字符"));
+        TsAftermarket aftermarket = tsAftermarketRepository.getOne(BaseUtil.trim(aftermarketId));
+        Assert.notNull(aftermarket, error("售后信息不存在"));
+        MasterOrder masterOrder = masterOrderRepository.findOneByIdOrOrderNo(aftermarket.getOrderId(), null)
+                .orElseThrow(error("订单信息不存在"));
+        if (aftermarket.getAftermarketStatus() != AftermarketStatus.CREATE) {
+            throw error("不能取消进行中或已完成的售后").get();
+        }
+        aftermarket.setAftermarketStatus(AftermarketStatus.CANCEL);
+        aftermarket.setUpdateUserId(BaseUtil.trim(opUserId));
+        aftermarket.setUpdateDateTime(new Date());
+        tsAftermarketRepository.save(aftermarket);
+        //创建日志
+        TsOperationRecord record = TsOperationRecord.builder()
+                .id(BaseUtil.uuid())
+                .orderId(aftermarket.getOrderId())
+                .userId(BaseUtil.trim(opUserId))
+                .createTime(new Date())
+                .describes("售后已取消（商户订单号: " + masterOrder.getOrderNo() + "，售后单号：" + aftermarket.getId() + "）。")
+                .build();
+        tsOperationRecordRepository.save(record);
+        return true;
+    }
+
+    @Override
+    public TsAftermarket getAftermarketDetail(String orderId, String orderNo, String aftermarketId) {
+        Optional<MasterOrder> optional = masterOrderRepository.findOneByIdOrOrderNo(
+                BaseUtil.trim(orderId),
+                BaseUtil.trim(orderNo)
+        );
+        return tsAftermarketRepository.findOneByIdOrOrderId(
+                BaseUtil.trim(aftermarketId),
+                optional.isPresent() ? optional.get().getId() : ""
+        ).orElse(null);
     }
 
 }

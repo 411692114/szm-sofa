@@ -3,6 +3,8 @@ package com.sinszm.sofa.vo;
 import cn.hutool.core.lang.Assert;
 import com.sinszm.sofa.enums.Evaluative;
 import com.sinszm.sofa.util.BaseUtil;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,6 +23,7 @@ import static com.sinszm.sofa.support.Constant.error;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ApiModel(value = "评价信息")
 public class EvaluativeInfo implements Serializable {
 
     private static final long serialVersionUID = 6788035514356297418L;
@@ -28,6 +31,7 @@ public class EvaluativeInfo implements Serializable {
     /**
      * 订单id
      */
+    @ApiModelProperty(value = "订单ID")
     private String orderId;
 
     public EvaluativeInfo checkOrderId() {
@@ -40,6 +44,7 @@ public class EvaluativeInfo implements Serializable {
     /**
      * 评价者用户ID
      */
+    @ApiModelProperty(value = "评价用户ID")
     private String userId;
 
     public EvaluativeInfo checkUserId() {
@@ -52,6 +57,7 @@ public class EvaluativeInfo implements Serializable {
     /**
      * 评价级别
      */
+    @ApiModelProperty(value = "评价等级，可用于前端进行分数对照")
     private Evaluative level;
 
     public EvaluativeInfo checkLevel() {
@@ -62,6 +68,7 @@ public class EvaluativeInfo implements Serializable {
     /**
      * 描述
      */
+    @ApiModelProperty(value = "评价描述")
     private String describe;
 
     public EvaluativeInfo checkDescribe() {
