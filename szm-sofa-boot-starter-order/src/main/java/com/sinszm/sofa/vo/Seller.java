@@ -113,7 +113,7 @@ public class Seller implements Serializable {
     /**
      * 检查所有
      *
-     * @return {@link Seller}
+     * @return {Seller}
      */
     public Seller checkAll() {
         return this.checkUserId()

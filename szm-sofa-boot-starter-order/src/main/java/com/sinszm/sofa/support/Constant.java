@@ -37,7 +37,7 @@ public class Constant {
      * 验证的错误信息组装
      *
      * @param message 消息
-     * @return {@link Supplier<ApiException>}
+     * @return {Supplier<ApiException>}
      */
     public static Supplier<ApiException> error(String message) {
         String msg = Optional.ofNullable(message).orElse("系统异常");

@@ -40,7 +40,7 @@ public class SofaBootStarterOrderConfiguration {
     /**
      * 内置数据源
      *
-     * @return {@link DataSource}
+     * @return {DataSource}
      */
     @EnableOrderDataSource
     @Bean(name = DEFAULT_DATASOURCE_NAME)
@@ -80,7 +80,7 @@ public class SofaBootStarterOrderConfiguration {
         /**
          * 数据源
          *
-         * @return {@link DataSource}
+         * @return {DataSource}
          */
         private DataSource dataSource() {
             if (!szmOrderProperties.hasDataSource()) {
@@ -97,7 +97,7 @@ public class SofaBootStarterOrderConfiguration {
         /**
          * hibernate供应商适配器
          *
-         * @return {@link HibernateJpaVendorAdapter}
+         * @return {HibernateJpaVendorAdapter}
          */
         @Bean
         public HibernateJpaVendorAdapter hibernateVendorAdapter() {
@@ -113,7 +113,7 @@ public class SofaBootStarterOrderConfiguration {
         /**
          * 实体管理器
          *
-         * @return {@link LocalContainerEntityManagerFactoryBean}
+         * @return {LocalContainerEntityManagerFactoryBean}
          */
         @Bean(name = ENTITY_MANAGER_FACTORY_REF)
         public LocalContainerEntityManagerFactoryBean masterTsEntityManagerFactory() {
@@ -136,7 +136,7 @@ public class SofaBootStarterOrderConfiguration {
         /**
          * jpa事务管理器
          *
-         * @return {@link JpaTransactionManager}
+         * @return {JpaTransactionManager}
          */
         @Bean(name = TRANSACTION_MANAGER)
         public JpaTransactionManager jpaTransactionManager() {

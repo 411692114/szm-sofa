@@ -17,7 +17,7 @@ public interface MasterOrderRepository extends JpaRepository<MasterOrder, String
      *
      * @param orderId 订单id
      * @param orderNo 商户订单号
-     * @return {@link Optional<MasterOrder>}
+     * @return {Optional<MasterOrder>}
      */
     Optional<MasterOrder> findOneByIdOrOrderNo(String orderId, String orderNo);
 

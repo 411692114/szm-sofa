@@ -94,7 +94,7 @@ public class AftermarketInfo implements Serializable {
     /**
      * 检查所有
      *
-     * @return {@link AftermarketInfo}
+     * @return {AftermarketInfo}
      */
     public AftermarketInfo checkAll() {
         return this.checkOrderId()

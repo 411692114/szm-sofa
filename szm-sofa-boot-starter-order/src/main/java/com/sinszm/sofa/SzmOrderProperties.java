@@ -53,7 +53,7 @@ public class SzmOrderProperties {
     /**
      * 得到方言
      *
-     * @return {@link String}
+     * @return {String}
      */
     public String getDialect() {
         if (!hasDataSource()) {

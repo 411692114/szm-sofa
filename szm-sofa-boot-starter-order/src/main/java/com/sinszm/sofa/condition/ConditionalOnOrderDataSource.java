@@ -23,7 +23,7 @@ public class ConditionalOnOrderDataSource extends SpringBootCondition {
      * @param context 上下文
      * @param key     关键
      * @param cls     cls
-     * @return {@link T}
+     * @return {T}
      */
     private <T> T propValue(ConditionContext context, String key, Class<T> cls) {
         return context.getEnvironment().getProperty(key, cls);

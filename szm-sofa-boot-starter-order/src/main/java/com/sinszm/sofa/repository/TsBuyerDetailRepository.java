@@ -15,7 +15,7 @@ public interface TsBuyerDetailRepository extends JpaRepository<TsBuyerDetail, St
      * 根据订单ID获取买家信息
      *
      * @param orderId 订单id
-     * @return {@link Optional<TsBuyerDetail>}
+     * @return {Optional<TsBuyerDetail>}
      */
     Optional<TsBuyerDetail> findOneByOrderId(String orderId);
 }

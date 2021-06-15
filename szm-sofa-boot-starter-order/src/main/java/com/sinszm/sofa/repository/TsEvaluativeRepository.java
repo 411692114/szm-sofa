@@ -17,7 +17,7 @@ public interface TsEvaluativeRepository extends JpaRepository<TsEvaluative, Stri
      *
      * @param orderId          订单id
      * @param evaluativeStatus 评价状态
-     * @return {@link Optional<TsEvaluative>}
+     * @return {Optional<TsEvaluative>}
      */
     Optional<TsEvaluative> findOneByOrderIdAndEvaluativeStatus(String orderId, EvaluativeStatus evaluativeStatus);
 
@@ -25,7 +25,7 @@ public interface TsEvaluativeRepository extends JpaRepository<TsEvaluative, Stri
      * 根据订单id查找评价信息
      *
      * @param orderId 订单id
-     * @return {@link Optional<TsEvaluative>}
+     * @return {Optional<TsEvaluative>}
      */
     Optional<TsEvaluative> findOneByOrderId(String orderId);
 }

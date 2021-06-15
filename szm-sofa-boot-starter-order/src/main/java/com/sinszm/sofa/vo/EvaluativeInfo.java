@@ -82,7 +82,7 @@ public class EvaluativeInfo implements Serializable {
     /**
      * 检查所有
      *
-     * @return {@link EvaluativeInfo}
+     * @return {EvaluativeInfo}
      */
     public EvaluativeInfo checkAll() {
         return this.checkOrderId()

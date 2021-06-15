@@ -71,7 +71,7 @@ public class OrderApplicationServiceImpl implements OrderApplicationService {
      * @param goods   货物
      * @param seller  卖方
      * @param buyer   买家
-     * @return {@link OrderDetailVo}
+     * @return {OrderDetailVo}
      */
     @Override
     public OrderDetailVo generateOrder(String orderNo, Goods goods, Seller seller, Buyer buyer) {

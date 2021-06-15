@@ -25,7 +25,7 @@ public interface OrderApplicationService {
      * @param goods   货物
      * @param seller  卖方
      * @param buyer   买家
-     * @return {@link OrderDetailVo}
+     * @return {OrderDetailVo}
      */
     OrderDetailVo generateOrder(String orderNo, Goods goods, Seller seller, Buyer buyer);
 
@@ -66,7 +66,7 @@ public interface OrderApplicationService {
      *
      * @param orderId   订单id
      * @param orderNo   商户订单号
-     * @return {@link OrderDetailVo}
+     * @return {OrderDetailVo}
      */
     OrderDetailVo getOrderDetail(String orderId, String orderNo);
 
@@ -97,7 +97,7 @@ public interface OrderApplicationService {
      *
      * @param orderId   订单id
      * @param orderNo   商户订单号
-     * @return {@link TsEvaluative}
+     * @return {TsEvaluative}
      */
     TsEvaluative getOrderEvaluative(String orderId, String orderNo);
 
@@ -106,7 +106,7 @@ public interface OrderApplicationService {
      *
      * @param orderId   订单id
      * @param orderNo   商户订单号
-     * @return {@link List<TsOperationRecord>}
+     * @return {List<TsOperationRecord>}
      */
     List<TsOperationRecord> logsByOrderId(String orderId, String orderNo);
 
@@ -114,7 +114,7 @@ public interface OrderApplicationService {
      * 创建售后，订单已支付且订单状态在进行中或已完成时才可以创建售后
      *
      * @param aftermarketInfo 售后信息
-     * @return {@link String}   售后ID
+     * @return {String}   售后ID
      */
     default String createAftermarket(AftermarketInfo aftermarketInfo) {
         Assert.notNull(aftermarketInfo, error("售后信息不能为空"));
@@ -138,7 +138,7 @@ public interface OrderApplicationService {
      * @param refundFee      退费
      * @param refundGoodsNum 退货数量
      * @param refundReasons  退款原因
-     * @return {@link String}   售后ID
+     * @return {String}   售后ID
      */
     String createAftermarket(String orderId, String orderNo, String opUserId, Double refundFee, Integer refundGoodsNum, String refundReasons);
 
@@ -168,7 +168,7 @@ public interface OrderApplicationService {
      * 根据订单ID、商户订单号或售后ID获取订单售后信息
      *
      * @param aftermarketId 售后id
-     * @return {@link TsAftermarket}
+     * @return {TsAftermarket}
      */
     TsAftermarket getAftermarketDetail(String aftermarketId);
 
@@ -177,7 +177,7 @@ public interface OrderApplicationService {
      *
      * @param orderId 订单id
      * @param orderNo 商户订单号
-     * @return {@link List<TsAftermarket>}
+     * @return {List<TsAftermarket>}
      */
     List<TsAftermarket> getAftermarketList(String orderId, String orderNo);
 }

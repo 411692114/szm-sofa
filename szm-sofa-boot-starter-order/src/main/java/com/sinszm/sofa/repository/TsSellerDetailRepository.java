@@ -16,7 +16,7 @@ public interface TsSellerDetailRepository extends JpaRepository<TsSellerDetail, 
      * 根据订单ID获取卖家详情
      *
      * @param orderId 订单id
-     * @return {@link Optional<TsSellerDetail>}
+     * @return {Optional<TsSellerDetail>}
      */
     Optional<TsSellerDetail> findOneByOrderId(String orderId);
 }

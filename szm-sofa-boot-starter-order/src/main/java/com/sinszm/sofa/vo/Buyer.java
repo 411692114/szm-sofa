@@ -127,7 +127,7 @@ public class Buyer implements Serializable {
     /**
      * 检查所有
      *
-     * @return {@link Buyer}
+     * @return {Buyer}
      */
     public Buyer checkAll() {
         return this.checkUserId()

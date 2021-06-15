@@ -147,7 +147,7 @@ public class Goods implements Serializable {
     /**
      * 检查所有
      *
-     * @return {@link Goods}
+     * @return {Goods}
      */
     public Goods checkAll() {
         return this.checkGoodsId()

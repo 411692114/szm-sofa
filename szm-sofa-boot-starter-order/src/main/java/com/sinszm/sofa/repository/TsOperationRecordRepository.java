@@ -15,7 +15,7 @@ public interface TsOperationRecordRepository extends JpaRepository<TsOperationRe
      * 根据订单ID顺序查找订单日志列表
      *
      * @param orderId 订单id
-     * @return {@link List<TsOperationRecord>}
+     * @return {List<TsOperationRecord>}
      */
     List<TsOperationRecord> findByOrderIdOrderByCreateTimeAsc(String orderId);
 }

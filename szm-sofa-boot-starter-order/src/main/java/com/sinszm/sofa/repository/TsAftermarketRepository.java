@@ -19,7 +19,7 @@ public interface TsAftermarketRepository extends JpaRepository<TsAftermarket, St
      *
      * @param orderId 订单id
      * @param list    状态列表
-     * @return {@link Optional<TsAftermarket>}
+     * @return {Optional<TsAftermarket>}
      */
     Optional<TsAftermarket> findOneByOrderIdAndAftermarketStatusIn(String orderId, List<AftermarketStatus> list);
 
@@ -27,7 +27,7 @@ public interface TsAftermarketRepository extends JpaRepository<TsAftermarket, St
      * 根据订单ID查找售后单列表
      *
      * @param orderId 订单id
-     * @return {@link List<TsAftermarket>}
+     * @return {List<TsAftermarket>}
      */
     List<TsAftermarket> findByOrderIdOrderByUpdateDateTimeDesc(String orderId);
 }
