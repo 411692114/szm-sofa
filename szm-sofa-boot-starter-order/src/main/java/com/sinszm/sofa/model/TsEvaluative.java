@@ -52,20 +52,20 @@ public class TsEvaluative {
      * 评价级别
      */
     @Enumerated(EnumType.STRING)
-    @Column(name = "eval_level")
+    @Column(name = "eval_level", length = 64)
     private Evaluative evalLevel;
 
     /**
      * 描述
      */
-    @Column(name = "describe", length = 200)
-    private String describe;
+    @Column(name = "describes", length = 200)
+    private String describes;
 
     /**
      * 评价状态
      */
     @Enumerated(EnumType.STRING)
-    @Column(name = "evaluative_status", nullable = false)
+    @Column(name = "evaluative_status", nullable = false, length = 64)
     private EvaluativeStatus evaluativeStatus;
 
     /**

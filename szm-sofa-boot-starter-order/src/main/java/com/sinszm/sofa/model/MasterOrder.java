@@ -70,8 +70,8 @@ public class MasterOrder {
     /**
      * 描述
      */
-    @Column(name = "describe", length = 200)
-    private String describe;
+    @Column(name = "describes", length = 200)
+    private String describes;
 
     /**
      * 单价
@@ -119,7 +119,7 @@ public class MasterOrder {
      * 订单状态
      */
     @Enumerated(EnumType.STRING)
-    @Column(name = "order_status", nullable = false)
+    @Column(name = "order_status", nullable = false, length = 64)
     private OrderStatus orderStatus;
 
     /**

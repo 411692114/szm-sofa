@@ -55,7 +55,7 @@ public class TsOperationRecord {
     /**
      * 日志描述
      */
-    @Column(name = "describe", length = 200)
-    private String describe;
+    @Column(name = "describes", length = 200)
+    private String describes;
 
 }

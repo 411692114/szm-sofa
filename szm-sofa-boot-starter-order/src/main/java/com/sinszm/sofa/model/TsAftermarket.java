@@ -68,7 +68,7 @@ public class TsAftermarket {
      * 售后状态
      */
     @Enumerated(EnumType.STRING)
-    @Column(name = "aftermarket_status", nullable = false)
+    @Column(name = "aftermarket_status", nullable = false, length = 64)
     private AftermarketStatus aftermarketStatus;
 
     /**

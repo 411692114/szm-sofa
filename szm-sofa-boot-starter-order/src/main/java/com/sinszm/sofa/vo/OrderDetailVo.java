@@ -15,7 +15,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderDetailVo extends MasterOrder {
+public class OrderDetailVo {
+
+    /**
+     * 订单基本信息
+     */
+    private MasterOrder basicInfo;
 
     /**
      * 买家
