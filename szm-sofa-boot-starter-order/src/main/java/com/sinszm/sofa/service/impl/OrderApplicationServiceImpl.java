@@ -28,7 +28,7 @@ import static com.sinszm.sofa.support.Constant.error;
 @Transactional(
         transactionManager = TRANSACTION_MANAGER,
         rollbackFor = Exception.class,
-        propagation= Propagation.NESTED
+        propagation= Propagation.REQUIRED
 )
 @Service
 public class OrderApplicationServiceImpl implements OrderApplicationService {
