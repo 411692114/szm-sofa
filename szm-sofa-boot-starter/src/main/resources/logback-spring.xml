@@ -3,7 +3,7 @@
 
     <!--  获取Spring中的配置属性  -->
     <springProperty scope="context" name="app.name" source="spring.application.name" defaultValue="def"/>
-    <springProperty scope="context" name="log.home" source="logging.path" defaultValue="./logs"/>
+    <springProperty scope="context" name="log.home" source="logging.file.path" defaultValue="./logs"/>
 
     <!--  上下文名称  -->
     <contextName>${app.name}</contextName>

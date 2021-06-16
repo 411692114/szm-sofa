@@ -23,13 +23,3 @@ services:
         max-size: "1000M"
         max-file: "10"
       driver: json-file
-  #分布式文件服务器FastDFS
-  fastdfs:
-    image: qbanxiaoli/fastdfs
-    restart: always
-    container_name: fastdfs
-    network_mode: "host"
-    env_file:
-      - ./fastdfs.env
-    volumes:
-      - ./fastdfs:/var/local

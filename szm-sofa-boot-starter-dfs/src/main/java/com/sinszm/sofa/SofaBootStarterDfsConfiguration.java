@@ -8,7 +8,6 @@ import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.model.CannedAccessControlList;
 import com.aliyun.oss.model.DataRedundancyType;
 import com.aliyun.oss.model.StorageClass;
-import com.github.tobato.fastdfs.FdfsClientConfig;
 import com.qcloud.cos.COSClient;
 import com.qcloud.cos.ClientConfig;
 import com.qcloud.cos.auth.BasicCOSCredentials;
@@ -25,8 +24,8 @@ import io.minio.MinioClient;
 import lombok.SneakyThrows;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.*;
-import org.springframework.jmx.support.RegistrationPolicy;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.Resource;
 import java.util.Optional;
@@ -35,16 +34,8 @@ import java.util.Optional;
  * 配置加载中心
  * @author sinszm
  */
-@PropertySource("classpath:settings.properties")
 @EnableConfigurationProperties({DfsProperties.class,MinIoProperties.class,CosProperties.class,OssProperties.class})
 public class SofaBootStarterDfsConfiguration {
-
-    @EnableDFS(DfsType.FAST_DFS)
-    @Configuration
-    @Import(FdfsClientConfig.class)
-    @EnableMBeanExport(registration = RegistrationPolicy.IGNORE_EXISTING)
-    public static class FastDfsConfiguration {
-    }
 
     @EnableDFS(DfsType.MINIO)
     @Configuration

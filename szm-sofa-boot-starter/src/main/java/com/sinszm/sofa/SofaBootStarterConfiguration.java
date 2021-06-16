@@ -3,6 +3,7 @@ package com.sinszm.sofa;
 
 import cn.hutool.extra.spring.EnableSpringUtil;
 import com.sinszm.sofa.annotation.EnableValidate;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScans;
 import org.springframework.context.annotation.PropertySource;
@@ -15,6 +16,7 @@ import org.springframework.context.annotation.PropertySource;
 @EnableSpringUtil
 @ComponentScans({@ComponentScan("com.sinszm.*")})
 @PropertySource("classpath:settings.properties")
+@EnableConfigurationProperties(SzmLogProperties.class)
 public class SofaBootStarterConfiguration {
 
 }

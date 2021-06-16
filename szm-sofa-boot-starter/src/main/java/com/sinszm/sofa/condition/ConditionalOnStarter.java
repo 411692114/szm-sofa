@@ -16,7 +16,7 @@ public class ConditionalOnStarter extends SpringBootCondition  {
 
     private static final String APPLICATION_NAME = "spring.application.name";
 
-    private static final String LOG_PATH = "logging.path";
+    private static final String LOG_PATH = "logging.file.path";
 
     private String propValue(ConditionContext context, String key) {
         return StrUtil.trimToEmpty(
