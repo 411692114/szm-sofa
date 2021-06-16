@@ -86,7 +86,7 @@ swagger:
 #应用名称必须要，其他配置仅供参考
 spring:
   application:
-    name: MS-NSP-V2
+    name: DEMO
   servlet:
     multipart:
       enabled: true
