@@ -14,6 +14,7 @@ import java.util.*;
  */
 public abstract class AbstractQuartzMethod {
 
+    @Deprecated
     protected void addJobListener(JobKey jobKey, Class<? extends Job> clazz, Scheduler scheduler) throws
             ClassNotFoundException, IllegalAccessException, InstantiationException, SchedulerException {
         String tempPath = clazz.getName() + "Listener";
@@ -23,6 +24,7 @@ public abstract class AbstractQuartzMethod {
         scheduler.getListenerManager().addJobListener((JobListener) jobListener, keyMatcher);
     }
 
+    @Deprecated
     protected void addTriggerListened(Trigger trigger, Class<? extends Job> clazz, Scheduler scheduler)
             throws ClassNotFoundException, IllegalAccessException, InstantiationException, SchedulerException {
         String tempPath = clazz.getName() + "TListener";
@@ -32,6 +34,7 @@ public abstract class AbstractQuartzMethod {
         scheduler.getListenerManager().addTriggerListener(triggerListener, keyMatcher);
     }
 
+    @Deprecated
     protected String buildEntirePath(String tempPath) {
         String[] packageNames = tempPath.split("\\.");
         List<String> list = new ArrayList<>(Arrays.asList(packageNames));
