@@ -95,9 +95,6 @@ public class IQuartzServiceImpl extends AbstractQuartzMethod implements IQuartzS
     @SneakyThrows
     @Override
     public void executeJob(String name, String group, Class<? extends Job> clazz, Date startTime, Map<String, String> jobValue) {
-        if (checkExists(name, group)) {
-            throw new ApiException("202", "任务已存在，请先删除重试");
-        }
         //调度器
         Scheduler scheduler = scheduler();
         //构造任务
@@ -105,6 +102,11 @@ public class IQuartzServiceImpl extends AbstractQuartzMethod implements IQuartzS
                 .withIdentity(name, group)
                 .storeDurably(true)
                 .build();
+        //如果已经存在调度任务则直接触发调用
+        if (checkExists(name, group)) {
+            //立即触发
+            scheduler.triggerJob(jobDetail.getKey());
+        }
         //处理参数
         if (ObjectUtil.isNotEmpty(jobValue)) {
             for (Map.Entry<String, String> entry : jobValue.entrySet()) {
@@ -116,10 +118,10 @@ public class IQuartzServiceImpl extends AbstractQuartzMethod implements IQuartzS
                 .withIdentity(name, group)
                 .withSchedule(
                         SimpleScheduleBuilder.simpleSchedule().withMisfireHandlingInstructionFireNow()
-                ).startAt(startTime == null || startTime.before(new Date()) ? new Date() : startTime).build();
+                )
+                .startAt(startTime == null || startTime.before(new Date()) ? new Date() : startTime)
+                .build();
         scheduler.scheduleJob(jobDetail, trigger);
-        //立即触发
-        scheduler.triggerJob(jobDetail.getKey());
     }
 
     @SneakyThrows
