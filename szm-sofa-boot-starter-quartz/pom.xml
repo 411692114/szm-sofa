@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.sinszm.sofa</groupId>
+        <artifactId>szm-sofa</artifactId>
+        <version>1.0.7</version>
+    </parent>
+
+    <artifactId>szm-sofa-boot-starter-quartz</artifactId>
+    <version>1.0.7</version>
+    <packaging>jar</packaging>
+
+    <name>szm-sofa-boot-starter-quartz</name>
+    <description>
+        高可用服务框架，分布式任务调度服务组件 Copyright © 2021 智慧程序猿（sinsz.com） All rights reserved.
+    </description>
+
+    <developers>
+        <developer>
+            <name>博学浮生</name>
+            <email>admin@sinsz.com</email>
+            <url>https://www.sinsz.com</url>
+        </developer>
+        <developer>
+            <name>陈健波</name>
+            <email>chenjianbo@sinszm.com</email>
+            <url>https://www.sinsz.com</url>
+        </developer>
+    </developers>
+
+    <organization>
+        <name>SINSZM</name>
+        <url>https://www.sinsz.com</url>
+    </organization>
+
+    <licenses>
+        <license>
+            <name>The MIT License (MIT)</name>
+            <url>https://www.sinsz.com/LICENSE</url>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:git:https://gitee.com/sinszm/szm-sofa.git</connection>
+        <developerConnection>scm:git:https://gitee.com/sinszm/szm-sofa.git</developerConnection>
+        <url>https://gitee.com/sinszm/szm-sofa.git</url>
+    </scm>
+
+    <properties>
+        <charset>UTF-8</charset>
+        <project.build.sourceEncoding>${charset}</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>${charset}</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <quartz.version>2.3.2</quartz.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.sinszm.sofa</groupId>
+            <artifactId>szm-sofa-boot-starter</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>${quartz.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz-jobs</artifactId>
+            <version>${quartz.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+</project>
