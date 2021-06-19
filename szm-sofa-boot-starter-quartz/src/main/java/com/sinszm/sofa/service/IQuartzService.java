@@ -56,8 +56,7 @@ public interface IQuartzService {
             Map<String, String> jobValue);
 
     /**
-     * 执行工作
-     * 立即执行工作
+     * 指定时间执行工作，开始时间为空表示立即执行
      *
      * @param name      任务名称
      * @param group     任务分组
@@ -105,23 +104,6 @@ public interface IQuartzService {
      * @return               时间
      */
     Date modifyTime(String name, String group, String cronExpression);
-
-    /**
-     * 修改定时任务的时间和参数
-     *
-     * @param name              任务名称
-     * @param group             任务分组
-     * @param clazz             任务实现类
-     * @param cronExpression    cron表达式
-     * @param jobValue          任务参数
-     * @return                  时间
-     */
-    Date modifyJobValueAndTime(
-            String name,
-            String group,
-            Class<? extends Job> clazz,
-            String cronExpression,
-            Map<String, String> jobValue);
 
     /**
      * 检查是否存在

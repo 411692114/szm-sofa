@@ -182,37 +182,6 @@ public class IQuartzServiceImpl extends AbstractQuartzMethod implements IQuartzS
 
     @SneakyThrows
     @Override
-    public Date modifyJobValueAndTime(String name, String group, Class<? extends Job> clazz, String cronExpression, Map<String, String> jobValue) {
-        //调度器
-        Scheduler scheduler = scheduler();
-        //触发器
-        TriggerKey oldTk = TriggerKey.triggerKey(name, group);
-        //停止触发器
-        scheduler.pauseTrigger(oldTk);
-        //移除触发器
-        scheduler.unscheduleJob(oldTk);
-        //作业
-        JobKey jobKey = JobKey.jobKey(name, group);
-        //删除作业
-        scheduler.deleteJob(jobKey);
-        //构造任务
-        JobDetail job = newJob(clazz).withIdentity(name, group).storeDurably(true).build();
-        if (jobValue != null) {
-            for (Map.Entry<String, String> entry : jobValue.entrySet()) {
-                job.getJobDataMap().put(entry.getKey(), entry.getValue());
-            }
-        }
-        //构造任务触发器
-        Trigger trg = newTrigger().withIdentity(name, group)
-                .forJob(job).withSchedule(cronSchedule(cronExpression)
-                        .withMisfireHandlingInstructionDoNothing()).build();
-        Date nextFireTime = scheduler.scheduleJob(job, trg);
-        log.info("修改作业触发时间和参数=> [触发器名称：" + name + " 作业组：" + group + "] ");
-        return nextFireTime;
-    }
-
-    @SneakyThrows
-    @Override
     public boolean checkExists(String name, String group) {
         Scheduler scheduler = scheduler();
         JobKey jobKey = JobKey.jobKey(name, group);
