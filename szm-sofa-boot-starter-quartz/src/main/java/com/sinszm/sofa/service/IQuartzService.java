@@ -1,5 +1,10 @@
 package com.sinszm.sofa.service;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.lang.Assert;
+import com.sinszm.sofa.exception.ApiException;
+import com.sinszm.sofa.job.DefaultSimpleJob;
+import com.sinszm.sofa.vo.JobParam;
 import org.quartz.Job;
 import org.quartz.Scheduler;
 import org.quartz.Trigger;
@@ -43,6 +48,24 @@ public interface IQuartzService {
      *
      * @param name              任务名称
      * @param group             任务分组
+     * @param cronExpression    cron表达式
+     * @param param             任务参数
+     * @return                  时间
+     */
+    default Date addJob(
+            String name,
+            String group,
+            String cronExpression,
+            JobParam param) {
+        Assert.notNull(param, () -> new ApiException("202", "任务参数不能为空"));
+        return addJob(name, group, DefaultSimpleJob.class, cronExpression, BeanUtil.beanToMap(param));
+    }
+
+    /**
+     * 添加工作
+     *
+     * @param name              任务名称
+     * @param group             任务分组
      * @param clazz             任务实现类
      * @param trigger           触发器
      * @param jobValue          任务参数
@@ -54,6 +77,24 @@ public interface IQuartzService {
             Class<? extends Job> clazz,
             Trigger trigger,
             Map<String, Object> jobValue);
+
+    /**
+     * 添加工作
+     *
+     * @param name              任务名称
+     * @param group             任务分组
+     * @param trigger           触发器
+     * @param param             任务参数
+     * @return                  时间
+     */
+    default Date addJob(
+            String name,
+            String group,
+            Trigger trigger,
+            JobParam param) {
+        Assert.notNull(param, () -> new ApiException("202", "任务参数不能为空"));
+        return addJob(name, group, DefaultSimpleJob.class, trigger, BeanUtil.beanToMap(param));
+    }
 
     /**
      * 指定时间执行工作，开始时间为空表示立即执行
@@ -70,6 +111,23 @@ public interface IQuartzService {
             Class<? extends Job> clazz,
             Date startTime,
             Map<String, Object> jobValue);
+
+    /**
+     * 指定时间执行工作，开始时间为空表示立即执行
+     *
+     * @param name      任务名称
+     * @param group     任务分组
+     * @param param     任务参数
+     * @param startTime 开始时间
+     */
+    default void executeJob(
+            String name,
+            String group,
+            JobParam param,
+            Date startTime) {
+        Assert.notNull(param, () -> new ApiException("202", "任务参数不能为空"));
+        executeJob(name, group, DefaultSimpleJob.class, startTime, BeanUtil.beanToMap(param));
+    }
 
     /**
      * 删除工作
