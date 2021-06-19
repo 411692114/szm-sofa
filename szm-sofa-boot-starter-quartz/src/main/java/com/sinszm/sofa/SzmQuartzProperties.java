@@ -35,6 +35,11 @@ public class SzmQuartzProperties {
     private DataSourceInitializationMode mode;
 
     /**
+     * 任务实例名
+     */
+    private String instanceName;
+
+    /**
      * 检查所有
      *
      * @return {SzmQuartzProperties}
@@ -43,6 +48,7 @@ public class SzmQuartzProperties {
         Assert.notEmpty(BaseUtil.trim(this.dataSource), () -> new ApiException("202", "请先指定数据源实例名称"));
         this.dataSource = BaseUtil.trim(this.dataSource);
         this.mode = mode == null ? ALWAYS : this.mode;
+        this.instanceName = BaseUtil.isEmpty(this.instanceName) ? "quartzScheduler" : this.instanceName;
         return this;
     }
 

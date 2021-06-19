@@ -12,13 +12,13 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.scheduling.quartz.SpringBeanJobFactory;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
+import java.util.Properties;
 
 /**
  * 配置加载中心
@@ -74,8 +74,29 @@ public class SofaBootStarterQuartzConfiguration {
         SchedulerFactoryBean bean = new SchedulerFactoryBean();
         bean.setDataSource(dataSource());
         bean.setJobFactory(new SpringBeanJobFactory());
-        bean.setConfigLocation(new ClassPathResource("/META-INF/quartz.properties"));
+        bean.setQuartzProperties(quartzProperties());
         return bean;
+    }
+
+    /**
+     * 定时任务配置
+     *
+     * @return {Properties}
+     */
+    private Properties quartzProperties() {
+        Properties properties = new Properties();
+        properties.setProperty("org.quartz.scheduler.instanceName", szmQuartzProperties.checkAll().getInstanceName());
+        properties.setProperty("org.quartz.scheduler.instanceId", "AUTO");
+        properties.setProperty("org.quartz.jobStore.class", "org.quartz.impl.jdbcjobstore.JobStoreTX");
+        properties.setProperty("org.quartz.jobStore.driverDelegateClass", "org.quartz.impl.jdbcjobstore.StdJDBCDelegate");
+        properties.setProperty("org.quartz.jobStore.tablePrefix", "QRTZ_");
+        properties.setProperty("org.quartz.jobStore.isClustered", "true");
+        properties.setProperty("org.quartz.jobStore.clusterCheckinInterval", "10000");
+        properties.setProperty("org.quartz.threadPool.class", "org.quartz.simpl.SimpleThreadPool");
+        properties.setProperty("org.quartz.threadPool.threadCount", "20");
+        properties.setProperty("org.quartz.threadPool.threadPriority", "5");
+        properties.setProperty("org.quartz.threadPool.threadsInheritContextClassLoaderOfInitializingThread", "true");
+        return properties;
     }
 
 }
