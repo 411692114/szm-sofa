@@ -48,12 +48,12 @@ public abstract class AbstractQuartzMethod {
             JobDetail jobDetail,
             Trigger trigger,
             Class<? extends Job> clazz,
-            Map<String, String> jobValue,
+            Map<String, Object> jobValue,
             boolean isJobListened,
             boolean isTriggerListened) {
         //处理参数
         if (jobValue != null) {
-            for (Map.Entry<String, String> entry : jobValue.entrySet()) {
+            for (Map.Entry<String, Object> entry : jobValue.entrySet()) {
                 jobDetail.getJobDataMap().put(entry.getKey(), entry.getValue());
             }
         }

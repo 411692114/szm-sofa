@@ -46,7 +46,7 @@ public class IQuartzServiceImpl extends AbstractQuartzMethod implements IQuartzS
 
     @SneakyThrows
     @Override
-    public Date addJob(String name, String group, Class<? extends Job> clazz, String cronExpression, Map<String, String> jobValue) {
+    public Date addJob(String name, String group, Class<? extends Job> clazz, String cronExpression, Map<String, Object> jobValue) {
         if (checkExists(name, group)) {
             throw new ApiException("202", "任务已存在，请先删除重试");
         }
@@ -70,7 +70,7 @@ public class IQuartzServiceImpl extends AbstractQuartzMethod implements IQuartzS
 
     @SneakyThrows
     @Override
-    public Date addJob(String name, String group, Class<? extends Job> clazz, Trigger trigger, Map<String, String> jobValue) {
+    public Date addJob(String name, String group, Class<? extends Job> clazz, Trigger trigger, Map<String, Object> jobValue) {
         if (checkExists(name, group)) {
             throw new ApiException("202", "任务已存在，请先删除重试");
         }
@@ -81,12 +81,6 @@ public class IQuartzServiceImpl extends AbstractQuartzMethod implements IQuartzS
                 .withIdentity(name, group)
                 .storeDurably(true)
                 .build();
-        //处理参数
-        if (jobValue != null) {
-            for (Map.Entry<String, String> entry : jobValue.entrySet()) {
-                jobDetail.getJobDataMap().put(entry.getKey(), entry.getValue());
-            }
-        }
         Date nextDate = nextDate(scheduler,jobDetail, trigger, clazz, jobValue,false, false);
         log.info("新增作业=> [作业名称：" + name + " 作业组：" + group + "] ");
         return nextDate;
@@ -94,7 +88,7 @@ public class IQuartzServiceImpl extends AbstractQuartzMethod implements IQuartzS
 
     @SneakyThrows
     @Override
-    public void executeJob(String name, String group, Class<? extends Job> clazz, Date startTime, Map<String, String> jobValue) {
+    public void executeJob(String name, String group, Class<? extends Job> clazz, Date startTime, Map<String, Object> jobValue) {
         if (checkExists(name, group)) {
             throw new ApiException("202", "任务已存在，请先删除重试");
         }
@@ -107,7 +101,7 @@ public class IQuartzServiceImpl extends AbstractQuartzMethod implements IQuartzS
                 .build();
         //处理参数
         if (ObjectUtil.isNotEmpty(jobValue)) {
-            for (Map.Entry<String, String> entry : jobValue.entrySet()) {
+            for (Map.Entry<String, Object> entry : jobValue.entrySet()) {
                 jobDetail.getJobDataMap().put(entry.getKey(), entry.getValue());
             }
         }

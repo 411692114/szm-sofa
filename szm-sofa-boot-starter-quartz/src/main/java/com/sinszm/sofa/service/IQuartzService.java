@@ -36,7 +36,7 @@ public interface IQuartzService {
             String group,
             Class<? extends Job> clazz,
             String cronExpression,
-            Map<String, String> jobValue);
+            Map<String, Object> jobValue);
 
     /**
      * 添加工作
@@ -53,7 +53,7 @@ public interface IQuartzService {
             String group,
             Class<? extends Job> clazz,
             Trigger trigger,
-            Map<String, String> jobValue);
+            Map<String, Object> jobValue);
 
     /**
      * 指定时间执行工作，开始时间为空表示立即执行
@@ -69,7 +69,7 @@ public interface IQuartzService {
             String group,
             Class<? extends Job> clazz,
             Date startTime,
-            Map<String, String> jobValue);
+            Map<String, Object> jobValue);
 
     /**
      * 删除工作
