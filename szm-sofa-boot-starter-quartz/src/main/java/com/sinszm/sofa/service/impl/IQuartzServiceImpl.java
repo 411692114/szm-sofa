@@ -182,6 +182,18 @@ public class IQuartzServiceImpl extends AbstractQuartzMethod implements IQuartzS
 
     @SneakyThrows
     @Override
+    public Date modifyTrigger(String name, String group, Trigger trigger) {
+        //调度器
+        Scheduler scheduler = scheduler();
+        //触发器
+        TriggerKey tk = TriggerKey.triggerKey(name, group);
+        Date nextFireTime = scheduler.rescheduleJob(tk, trigger);
+        log.info("修改作业触发时间=> [作业名称：" + name + " 作业组：" + group + "] ");
+        return nextFireTime;
+    }
+
+    @SneakyThrows
+    @Override
     public boolean checkExists(String name, String group) {
         Scheduler scheduler = scheduler();
         JobKey jobKey = JobKey.jobKey(name, group);

@@ -106,6 +106,16 @@ public interface IQuartzService {
     Date modifyTime(String name, String group, String cronExpression);
 
     /**
+     * 修改触发器
+     *
+     * @param name           任务名称
+     * @param group          任务分组
+     * @param trigger        触发器
+     * @return               时间
+     */
+    Date modifyTrigger(String name, String group, Trigger trigger);
+
+    /**
      * 检查是否存在
      *
      * @param name              任务名称
