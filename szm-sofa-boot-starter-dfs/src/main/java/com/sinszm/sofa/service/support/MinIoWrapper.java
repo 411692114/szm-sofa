@@ -59,6 +59,7 @@ public class MinIoWrapper {
         log.info("分组：{}, 存储路径：{}", response.bucket(), response.object());
         return UploadInfo.builder()
                 .group(response.bucket())
+                .bucket(response.bucket())
                 .path(response.object())
                 .build();
     }

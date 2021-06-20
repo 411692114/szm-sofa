@@ -6,7 +6,10 @@ import cn.hutool.core.util.URLUtil;
 import com.sinszm.sofa.DfsProperties;
 import com.sinszm.sofa.exception.ApiException;
 import com.sinszm.sofa.service.DfsService;
-import com.sinszm.sofa.service.support.*;
+import com.sinszm.sofa.service.support.CosWrapper;
+import com.sinszm.sofa.service.support.MinIoWrapper;
+import com.sinszm.sofa.service.support.OSSWrapper;
+import com.sinszm.sofa.service.support.UploadInfo;
 import com.sinszm.sofa.util.SpringHelper;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -25,10 +28,6 @@ import java.io.InputStream;
  */
 @Service
 public class DfsServiceImpl implements DfsService {
-
-    private FastDfsWrapper fastDfs() {
-        return SpringHelper.instance().getBean(FastDfsWrapper.class);
-    }
 
     private MinIoWrapper mimIo() {
         return SpringHelper.instance().getBean(MinIoWrapper.class);
@@ -54,8 +53,6 @@ public class DfsServiceImpl implements DfsService {
         switch (dfsProperties.getType()) {
             case MINIO:
                 return mimIo().upload(bytes, fileSize, contentType, extension);
-            case FAST_DFS:
-                return fastDfs().upload(bytes, fileSize, extension);
             case COS:
                 return cos().upload(bytes, fileSize, contentType, extension);
             case OSS:
@@ -66,26 +63,24 @@ public class DfsServiceImpl implements DfsService {
     }
 
     @Override
-    public InputStream download(String group, String path) {
-        Assert.notEmpty(group, () -> new ApiException("-1", "文件组或bucket不能为空"));
+    public InputStream download(String bucket, String path) {
+        Assert.notEmpty(bucket, () -> new ApiException("-1", "文件组或bucket不能为空"));
         Assert.notEmpty(path, () -> new ApiException("-1", "文件存储路径不能为空"));
         switch (dfsProperties.getType()) {
             case MINIO:
-                return mimIo().download(group, path);
-            case FAST_DFS:
-                return fastDfs().download(group, path);
+                return mimIo().download(bucket, path);
             case COS:
-                return cos().download(group, path);
+                return cos().download(bucket, path);
             case OSS:
-                return oss().download(group, path);
+                return oss().download(bucket, path);
             default:
                 throw new ApiException("-1", "暂不支持的文件下载类型");
         }
     }
 
     @Override
-    public ResponseEntity<InputStreamResource> download(String fileName, String group, String path) {
-        InputStream in = download(group, path);
+    public ResponseEntity<InputStreamResource> download(String fileName, String bucket, String path) {
+        InputStream in = download(bucket, path);
         byte[] bytes = IoUtil.readBytes(in);
         MultiValueMap<String, String> multiValueMap = new LinkedMultiValueMap<>();
         multiValueMap.add("Cache-Control", "no-cache, no-store, must-revalidate");

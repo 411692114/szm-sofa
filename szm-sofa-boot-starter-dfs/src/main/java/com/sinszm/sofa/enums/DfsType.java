@@ -7,11 +7,6 @@ package com.sinszm.sofa.enums;
 public enum DfsType {
 
     /**
-     * fastDfs
-     */
-    FAST_DFS,
-
-    /**
      * MinIO
      */
     MINIO,
