@@ -16,21 +16,24 @@ Szm-Sofa 是开源的基于 Spring Boot 的研发框架，它在 Spring Boot 的
 | [szm-sofa-boot-starter-jedis](szm-sofa-boot-starter-jedis)       | jar   |
 | [szm-sofa-boot-starter-order](szm-sofa-boot-starter-order)       | jar   |
 | [szm-sofa-boot-starter-orm](szm-sofa-boot-starter-orm)       | jar   |
+| [szm-sofa-boot-starter-quartz](szm-sofa-boot-starter-quartz)       | jar   |
 
 #### 2.2.当前版本
 
 ```
-com.sinszm.sofa:szm-sofa:pom:1.0.7
+com.sinszm.sofa:szm-sofa:pom:1.0.8
 
-com.sinszm.sofa:szm-sofa-boot-starter:jar:1.0.7
+com.sinszm.sofa:szm-sofa-boot-starter:jar:1.0.8
 
-com.sinszm.sofa:szm-sofa-boot-starter-dfs:jar:1.0.7
+com.sinszm.sofa:szm-sofa-boot-starter-dfs:jar:1.0.8
 
-com.sinszm.sofa:szm-sofa-boot-starter-jedis:jar:1.0.7
+com.sinszm.sofa:szm-sofa-boot-starter-jedis:jar:1.0.8
 
-com.sinszm.sofa:szm-sofa-boot-starter-order:jar:1.0.7
+com.sinszm.sofa:szm-sofa-boot-starter-order:jar:1.0.8
 
-com.sinszm.sofa:szm-sofa-boot-starter-orm:jar:1.0.7
+com.sinszm.sofa:szm-sofa-boot-starter-orm:jar:1.0.8
+
+com.sinszm.sofa:szm-sofa-boot-starter-quartz:jar:1.0.8
 ```
 
 ### 三、使用说明（以maven方式列举）
@@ -229,6 +232,29 @@ mybatis-plus:
 
 ```
 更多配置请参考MybatisPlus官网参数和SpringData的配置参数。
+
+#### 3.7.分布式任务调度组件（szm-sofa-boot-starter-quartz）使用说明
+
+依赖引入：
+```xml
+    <dependencies>
+        <dependency>
+            <groupId>com.sinszm.sofa</groupId>
+            <artifactId>szm-sofa-boot-starter-quartz</artifactId>
+        </dependency>
+    </dependencies>
+```
+
+配置推荐（默认yml格式，其他格式自行处理）：
+
+```yaml
+quartz:
+  data-source: dataSource
+  mode: always #根据需求指定模式，默认可不填
+  instance-name: quartzScheduler #根据需求制定任务实例名称，默认可不填
+```
+
+任务调度接口 `IQuartzService` 可业务中注入该接口进行操作。
 
 ### 四、联系方式
 
