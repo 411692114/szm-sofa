@@ -26,11 +26,12 @@ public final class LockUtil {
                 return supplier.get();
             } else {
                 log.info("任务已锁定");
+                return null;
             }
         } catch (Exception e) {
             log.error("任务锁执行业务异常", e);
+            throw new ApiException("110", "任务锁执行业务异常");
         }
-        throw new ApiException("110", "任务锁执行业务异常");
     }
 
     /**
@@ -47,11 +48,12 @@ public final class LockUtil {
                 return supplier.get();
             } else {
                 log.info("任务已锁定");
+                return null;
             }
         } catch (Exception e) {
             log.error("任务锁执行业务异常", e);
+            throw new ApiException("110", "任务锁执行业务异常");
         }
-        throw new ApiException("110", "任务锁执行业务异常");
     }
 
     /**
@@ -69,11 +71,12 @@ public final class LockUtil {
                 return supplier.get();
             } else {
                 log.info("任务已锁定");
+                return null;
             }
         } catch (Exception e) {
             log.error("任务锁执行业务异常", e);
+            throw new ApiException("110", "任务锁执行业务异常");
         }
-        throw new ApiException("110", "任务锁执行业务异常");
     }
-    
+
 }
