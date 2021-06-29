@@ -21,19 +21,28 @@ Szm-Sofa 是开源的基于 Spring Boot 的研发框架，它在 Spring Boot 的
 #### 2.2.当前版本
 
 ```
-com.sinszm.sofa:szm-sofa:pom:1.0.8
+com.sinszm.sofa:szm-sofa:pom:1.1.0
 
-com.sinszm.sofa:szm-sofa-boot-starter:jar:1.0.8
+com.sinszm.sofa:szm-sofa-boot-starter:jar:1.1.0
 
-com.sinszm.sofa:szm-sofa-boot-starter-dfs:jar:1.0.8
+com.sinszm.sofa:szm-sofa-boot-starter-dfs:jar:1.1.0
 
-com.sinszm.sofa:szm-sofa-boot-starter-jedis:jar:1.0.8
+com.sinszm.sofa:szm-sofa-boot-starter-jedis:jar:1.1.0
 
-com.sinszm.sofa:szm-sofa-boot-starter-order:jar:1.0.8
+com.sinszm.sofa:szm-sofa-boot-starter-order:jar:1.1.0
 
-com.sinszm.sofa:szm-sofa-boot-starter-orm:jar:1.0.8
+com.sinszm.sofa:szm-sofa-boot-starter-orm:jar:1.1.0
 
-com.sinszm.sofa:szm-sofa-boot-starter-quartz:jar:1.0.8
+com.sinszm.sofa:szm-sofa-boot-starter-quartz:jar:1.1.0
+```
+
+#### 2.3.更新日志
+
+```
+1.新增ObjectRedisTemplate实例支持；
+
+2.新增Redis实现分布式锁；
+
 ```
 
 ### 三、使用说明（以maven方式列举）
@@ -152,7 +161,14 @@ dfs:
             <groupId>com.sinszm.sofa</groupId>
             <artifactId>szm-sofa-boot-starter-jedis</artifactId>
         </dependency>
+        
+        <!--  如果需要使用ObjectRedisTemplate实例和分布式锁功能，则必须引入以下依赖  -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
     </dependencies>
+
 ```
 
 配置推荐（默认yml格式，其他格式自行处理）：
@@ -163,12 +179,25 @@ jedis:
   address: 192.168.8.196:6379
   database: 14
 
+#如果需要使用ObjectRedisTemplate实例和分布式锁功能，推荐增加以下配置
+spring:
+  redis:
+    url: redis://192.168.8.196:6379
+    database: ${jedis.database}
+    lettuce:
+      pool:
+        max-active: 50
+        max-idle: 10
+        min-idle: 0
+        max-wait: -1ms
+    timeout: 15000ms
+
 ```
 更多配置请参考配置类
 
 [JedisProperties.java](szm-sofa-boot-starter-jedis/src/main/java/com/sinszm/sofa/JedisProperties.java)
 
-推荐使用工具`JedisUtil`来操作缓存。
+推荐使用工具`JedisUtil`、`ObjectRedisTemplate`、`LockUtil` 等来操作缓存与锁。
 
 #### 3.5.基础订单服务（szm-sofa-boot-starter-order）使用说明
 
